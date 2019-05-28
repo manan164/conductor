@@ -71,24 +71,24 @@ public class ExecutionDAOFacade {
     public Workflow getWorkflowById(String workflowId, boolean includeTasks) {
         Workflow workflow = executionDAO.getWorkflow(workflowId, includeTasks);
         if (workflow == null) {
-            LOGGER.debug("Workflow {} not found in executionDAO, checking indexDAO", workflowId);
-            String json = indexDAO.get(workflowId, RAW_JSON_FIELD);
-            if (json == null) {
+//            LOGGER.debug("Workflow {} not found in executionDAO, checking indexDAO", workflowId);
+//            String json = indexDAO.get(workflowId, RAW_JSON_FIELD);
+//            if (json == null) {
                 String errorMsg = String.format("No such workflow found by id: %s", workflowId);
                 LOGGER.error(errorMsg);
                 throw new ApplicationException(ApplicationException.Code.NOT_FOUND, errorMsg);
-            }
-
-            try {
-                workflow = objectMapper.readValue(json, Workflow.class);
-                if (!includeTasks) {
-                    workflow.getTasks().clear();
-                }
-            } catch (IOException e) {
-                String errorMsg = String.format("Error reading workflow: %s", workflowId);
-                LOGGER.error(errorMsg);
-                throw new ApplicationException(ApplicationException.Code.BACKEND_ERROR, errorMsg, e);
-            }
+//            }
+//
+//            try {
+//                workflow = objectMapper.readValue(json, Workflow.class);
+//                if (!includeTasks) {
+//                    workflow.getTasks().clear();
+//                }
+//            } catch (IOException e) {
+//                String errorMsg = String.format("Error reading workflow: %s", workflowId);
+//                LOGGER.error(errorMsg);
+//                throw new ApplicationException(ApplicationException.Code.BACKEND_ERROR, errorMsg, e);
+//            }
         }
         return workflow;
     }
@@ -143,7 +143,7 @@ public class ExecutionDAOFacade {
      */
     public String createWorkflow(Workflow workflow) {
         executionDAO.createWorkflow(workflow);
-        indexDAO.indexWorkflow(workflow);
+        indexDAO.asyncIndexWorkflow(workflow);
         return workflow.getWorkflowId();
     }
 
@@ -155,7 +155,7 @@ public class ExecutionDAOFacade {
      */
     public String updateWorkflow(Workflow workflow) {
         executionDAO.updateWorkflow(workflow);
-        indexDAO.indexWorkflow(workflow);
+        indexDAO.asyncIndexWorkflow(workflow);
         return workflow.getWorkflowId();
     }
 
@@ -176,12 +176,12 @@ public class ExecutionDAOFacade {
             // remove workflow from ES
             if (archiveWorkflow) {
                 //Add to elasticsearch
-                indexDAO.updateWorkflow(workflowId,
+                indexDAO.asyncUpdateWorkflow(workflowId,
                         new String[]{RAW_JSON_FIELD, ARCHIVED_FIELD},
                         new Object[]{objectMapper.writeValueAsString(workflow), true});
             } else {
                 // Not archiving, also remove workflowId from index
-                indexDAO.removeWorkflow(workflowId);
+                indexDAO.asyncRemoveWorkflow(workflowId);
             }
 
             // remove workflow from DAO
@@ -232,7 +232,7 @@ public class ExecutionDAOFacade {
     public void updateTask(Task task) {
         try {
             executionDAO.updateTask(task);
-            indexDAO.indexTask(task);
+            //indexDAO.asyncIndexTask(task);
         } catch (Exception e) {
             String errorMsg = String.format("Error updating task: %s in workflow: %s", task.getTaskId(), task.getWorkflowInstanceId());
             LOGGER.error(errorMsg, e);
@@ -270,14 +270,14 @@ public class ExecutionDAOFacade {
     public boolean addEventExecution(EventExecution eventExecution) {
         boolean added = executionDAO.addEventExecution(eventExecution);
         if (added) {
-            indexDAO.addEventExecution(eventExecution);
+            indexDAO.asyncAddEventExecution(eventExecution);
         }
         return added;
     }
 
     public void updateEventExecution(EventExecution eventExecution) {
         executionDAO.updateEventExecution(eventExecution);
-        indexDAO.addEventExecution(eventExecution);
+        indexDAO.asyncAddEventExecution(eventExecution);
     }
 
     public void removeEventExecution(EventExecution eventExecution) {
@@ -293,7 +293,7 @@ public class ExecutionDAOFacade {
     }
 
     public void addTaskExecLog(List<TaskExecLog> logs) {
-        indexDAO.addTaskExecutionLogs(logs);
+        indexDAO.asyncAddTaskExecutionLogs(logs);
     }
 
     public void addMessage(String queue, Message message) {

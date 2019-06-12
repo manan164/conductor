@@ -123,7 +123,7 @@ public class ExecutionService {
 			throw new ApplicationException(ApplicationException.Code.INVALID_INPUT,
 					"Long Poll Timeout value cannot be more than 5 seconds");
 		}
-		String queueName = QueueUtils.getQueueName(taskType, domain);
+		String queueName = QueueUtils.getQueueName(taskType, domain, null);
 
 		List<Task> tasks = new LinkedList<>();
 		try {
@@ -352,7 +352,7 @@ public class ExecutionService {
 		SearchResult<String> result = executionDAOFacade.searchWorkflows(query, freeText, start, size, sortOptions);
 		List<WorkflowSummary> workflows = result.getResults().stream().parallel().map(workflowId -> {
 			try {
-				return new WorkflowSummary(executionDAOFacade.getWorkflowById(workflowId,false));
+				return new WorkflowSummary(executionDAOFacade.fetchWorkFlow(workflowId));
 			} catch(Exception e) {
 				logger.error("Error fetching workflow by id: {}", workflowId, e);
 				return null;
@@ -370,7 +370,7 @@ public class ExecutionService {
 				.map(taskSummary -> {
 					try {
 						String workflowId = taskSummary.getWorkflowId();
-						return new WorkflowSummary(executionDAOFacade.getWorkflowById(workflowId, false));
+						return new WorkflowSummary(executionDAOFacade.fetchWorkFlow(workflowId));
 					} catch (Exception e) {
 						logger.error("Error fetching workflow by id: {}", taskSummary.getWorkflowId(), e);
 						return null;

@@ -43,7 +43,7 @@ public class DoWhile extends WorkflowSystemTask {
 		super("DO_WHILE");
 	}
 
-	Logger logger = LoggerFactory.getLogger(DoWhile.class);
+	static Logger logger = LoggerFactory.getLogger(DoWhile.class);
 
 	@Override
 	public void cancel(Workflow workflow, Task task, WorkflowExecutor executor) {
@@ -83,26 +83,26 @@ public class DoWhile extends WorkflowSystemTask {
 		} else if (!allDone) {
 			return false;
 		}
+		task.getOutputData().put("iteration", task.getIteration());
+		boolean shouldContinue = false;
 		try {
-			task.getOutputData().put("iteration", task.getIteration());
-			boolean shouldContinue = getEvaluatedCondition(task);
-			logger.debug("taskid {} condition evaluated to {}", task.getTaskId(), shouldContinue);
-			if (shouldContinue) {
-				return scheduleLoopTasks(task, workflow, provider);
-			} else {
-				return markLoopTaskSuccess(task);
-			}
+			 shouldContinue = getEvaluatedCondition(task);
 		} catch (ScriptException e) {
 			String message = String.format("Unable to evaluate condition %s , exception %s", task.getWorkflowTask().getLoopCondition(), e.getMessage());
 			logger.error(message);
-			logger.error("Marking task {} failed.", task.getTaskId());
 			return markLoopTaskFailed(task, message);
+		}
+		logger.debug("taskid {} condition evaluated to {}", task.getTaskId(), shouldContinue);
+		if (shouldContinue) {
+			return scheduleLoopTasks(task, workflow, provider);
+		} else {
+			return markLoopTaskSuccess(task);
 		}
 	}
 
 	private String getTaskRefName(WorkflowTask workflowTask, Task task) {
 		String refName = workflowTask.getTaskReferenceName();
-		if (task.getIteration()>0) {
+		if (task.getIteration() > 0) {
 			refName +=  "_" + task.getIteration();
 		}
 		return refName;

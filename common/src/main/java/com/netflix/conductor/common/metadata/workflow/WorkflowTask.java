@@ -157,10 +157,10 @@ public class WorkflowTask {
 	@ProtoField(id = 21)
 	private List<String> defaultExclusiveJoinTask = new LinkedList<>();
 
-	@ProtoField(id = 23)
+	@ProtoField(id = 27)
 	private String loopCondition;
 
-	@ProtoField(id = 24)
+	@ProtoField(id = 28)
 	private List<WorkflowTask> loopOver = new LinkedList<>();
 
 	/**
@@ -669,7 +669,9 @@ public class WorkflowTask {
                 Objects.equals(getSubWorkflowParam(), that.getSubWorkflowParam()) &&
                 Objects.equals(getJoinOn(), that.getJoinOn()) &&
                 Objects.equals(getSink(), that.getSink()) &&
-                Objects.equals(getDefaultExclusiveJoinTask(), that.getDefaultExclusiveJoinTask());
+                Objects.equals(getDefaultExclusiveJoinTask(), that.getDefaultExclusiveJoinTask()) &&
+				Objects.equals(getLoopCondition(), that.getLoopCondition()) &&
+				Objects.equals(getLoopOver(), that.getLoopOver());
     }
 
     @Override
@@ -695,7 +697,9 @@ public class WorkflowTask {
                 getJoinOn(),
                 getSink(),
                 isOptional(),
-                getDefaultExclusiveJoinTask()
+                getDefaultExclusiveJoinTask(),
+				getLoopCondition(),
+				getLoopOver()
         );
     }
 }

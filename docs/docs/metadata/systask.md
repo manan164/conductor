@@ -375,7 +375,9 @@ The input given to the event task is made available to the published message as 
 
 ## Do While Task
 
-Do While Task allows tasks to be executed in loop until given condition become false.
+Do While Task allows tasks to be executed in loop until given condition become false. Condition is evalued using nasshorn javascript engine.
+Each interation of loopOver task will have ref name as taskrefname_iteration.
+Condition can be of the iteration form or any of the loopover task output can be used.
 
 **Parameters:**
 
@@ -389,9 +391,9 @@ Do While Task allows tasks to be executed in loop until given condition become f
 ```json
 {
             "name": "Loop Task",
-            "taskReferenceName": "Loop Task",
+            "taskReferenceName": "LoopTask",
             "type": "DO_WHILE",
-            "loopCondition": "if ($.second_task['response']['body'] + $.first_task['response']['body'] > 10) { false; } else { true; }",
+            "loopCondition": "if ($.LoopTask['iteration'] > 5) { false; } else { true; }",
             "loopOver": [
                 {
                     "name": "first_task",

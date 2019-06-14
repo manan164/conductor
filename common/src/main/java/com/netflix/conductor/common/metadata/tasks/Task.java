@@ -187,7 +187,7 @@ public class Task {
     @ProtoField(id = 35)
     private String externalOutputPayloadStoragePath;
 
-    @ProtoField(id = 36)
+    @ProtoField(id = 40)
     private int iteration;
 
     public Task() {
@@ -752,6 +752,7 @@ public class Task {
                 ", externalInputPayloadStoragePath='" + externalInputPayloadStoragePath + '\'' +
                 ", externalOutputPayloadStoragePath='" + externalOutputPayloadStoragePath + '\'' +
                 ", isolationGroupId='" + isolationGroupId + '\'' +
+                ", iteration='" + iteration + '\'' +
                 '}';
     }
 
@@ -794,12 +795,13 @@ public class Task {
                 Objects.equals(getOutputMessage(), task.getOutputMessage()) &&
                 Objects.equals(getExternalInputPayloadStoragePath(), task.getExternalInputPayloadStoragePath()) &&
                 Objects.equals(getExternalOutputPayloadStoragePath(), task.getExternalOutputPayloadStoragePath()) &&
-                Objects.equals(getIsolationGroupId(), task.getIsolationGroupId());
+                Objects.equals(getIsolationGroupId(), task.getIsolationGroupId()) &&
+                        Objects.equals(getIteration(), task.getIteration());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTaskType(), getStatus(), getInputData(), getReferenceTaskName(), getRetryCount(), getSeq(), getCorrelationId(), getPollCount(), getTaskDefName(), getScheduledTime(), getStartTime(), getEndTime(), getUpdateTime(), getStartDelayInSeconds(), getRetriedTaskId(), isRetried(), isExecuted(), isCallbackFromWorker(), getResponseTimeoutSeconds(), getWorkflowInstanceId(), getWorkflowType(), getTaskId(), getReasonForIncompletion(), getCallbackAfterSeconds(), getWorkerId(), getOutputData(), getWorkflowTask(), getDomain(), getInputMessage(), getOutputMessage(), getRateLimitPerFrequency(), getRateLimitFrequencyInSeconds(), getExternalInputPayloadStoragePath(), getExternalOutputPayloadStoragePath(), getIsolationGroupId());
+        return Objects.hash(getTaskType(), getStatus(), getInputData(), getReferenceTaskName(), getRetryCount(), getSeq(), getCorrelationId(), getPollCount(), getTaskDefName(), getScheduledTime(), getStartTime(), getEndTime(), getUpdateTime(), getStartDelayInSeconds(), getRetriedTaskId(), isRetried(), isExecuted(), isCallbackFromWorker(), getResponseTimeoutSeconds(), getWorkflowInstanceId(), getWorkflowType(), getTaskId(), getReasonForIncompletion(), getCallbackAfterSeconds(), getWorkerId(), getOutputData(), getWorkflowTask(), getDomain(), getInputMessage(), getOutputMessage(), getRateLimitPerFrequency(), getRateLimitFrequencyInSeconds(), getExternalInputPayloadStoragePath(), getExternalOutputPayloadStoragePath(), getIsolationGroupId(), getIteration());
     }
 
     @ProtoField(id = 99)

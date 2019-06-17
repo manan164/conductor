@@ -50,7 +50,7 @@ public class DoWhile extends WorkflowSystemTask {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public boolean execute(Workflow workflow, Task task, WorkflowExecutor provider) {
+	public boolean execute(Workflow workflow, Task task, WorkflowExecutor workflowExecutor) {
 		
 		boolean allDone = true;
 		boolean hasFailures = false;
@@ -91,19 +91,18 @@ public class DoWhile extends WorkflowSystemTask {
 		}
 		logger.debug("taskid {} condition evaluated to {}", task.getTaskId(), shouldContinue);
 		if (shouldContinue) {
-			return scheduleLoopTasks(task, workflow, provider);
+			return scheduleLoopTasks(task, workflow, workflowExecutor);
 		} else {
 			return markLoopTaskSuccess(task);
 		}
 	}
 
-	boolean scheduleLoopTasks(Task task, Workflow workflow, WorkflowExecutor provider) {
+	boolean scheduleLoopTasks(Task task, Workflow workflow, WorkflowExecutor workflowExecutor) {
 		logger.debug("Scheduling loop tasks for taskid {} as condition {} evaluated to true",
 				task.getTaskId(), task.getWorkflowTask().getLoopCondition());
-		provider.removeLoopOverTasks(task, workflow);
+        workflowExecutor.removeLoopOverTasks(task, workflow);
 		task.setIteration(task.getIteration() + 1);
-		List<Task> tasks = provider.getDeciderService().getTasksToBeScheduled(workflow, task.getWorkflowTask(), task.getRetryCount());
-		provider.scheduleTask(workflow, tasks);
+        workflowExecutor.scheduleLoopTasks(task, workflow);
 		return true; // Return true even though status not changed. Iteration has to be updated in execution DAO.
 	}
 

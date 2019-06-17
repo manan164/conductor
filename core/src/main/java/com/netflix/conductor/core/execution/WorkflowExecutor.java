@@ -114,6 +114,10 @@ public class WorkflowExecutor {
         this.externalPayloadStorageUtils = externalPayloadStorageUtils;
     }
 
+    public DeciderService getDeciderService() {
+        return deciderService;
+    }
+
     /**
      * @throws ApplicationException
      */
@@ -1295,5 +1299,18 @@ public class WorkflowExecutor {
             return true;
         }
         return false;
+    }
+
+    public void removeLoopOverTasks(Task loopTask, Workflow workflow) {
+        // Remove all tasks after the "DO_WHILE" task
+        for(Task task: workflow.getTasks()) {
+            if (task.getSeq() > loopTask.getSeq()) {
+                executionDAOFacade.removeTask(task.getTaskId());
+            }
+        }
+        workflow.setTasks(workflow.getTasks().stream()
+                .filter(x -> (x.getSeq() <= loopTask.getSeq()))
+                .collect(Collectors.toCollection(ArrayList::new)));
+        executionDAOFacade.updateWorkflow(workflow);
     }
 }

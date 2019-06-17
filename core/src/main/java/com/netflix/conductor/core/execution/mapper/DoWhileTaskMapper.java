@@ -74,13 +74,13 @@ public class DoWhileTaskMapper implements TaskMapper {
         loopTask.setStatus(Task.Status.IN_PROGRESS);
         loopTask.setWorkflowTask(taskToSchedule);
 
+        tasksToBeScheduled.add(loopTask);
         List<WorkflowTask>loopOverTasks = taskToSchedule.getLoopOver();
         for (WorkflowTask wft : loopOverTasks) {
             List<Task> tasks = taskMapperContext.getDeciderService()
                     .getTasksToBeScheduled(workflowInstance, wft, retryCount);
             tasksToBeScheduled.addAll(tasks);
         }
-        tasksToBeScheduled.add(loopTask);
 
         return tasksToBeScheduled;
     }

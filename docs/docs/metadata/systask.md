@@ -376,7 +376,7 @@ The input given to the event task is made available to the published message as 
 ## Do While Task
 
 Do While Task allows tasks to be executed in loop until given condition become false. Condition is evalued using nasshorn javascript engine.
-Each interation of loopOver task will have ref name as taskrefname_iteration.
+Task history will be removed from execution once new iteration is scheduled.
 Condition can be of the iteration form or any of the loopover task output can be used.
 
 **Parameters:**

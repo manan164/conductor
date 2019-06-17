@@ -1126,7 +1126,6 @@ public class WorkflowExecutor {
 
     @VisibleForTesting
     boolean scheduleTask(Workflow workflow, List<Task> tasks) {
-        List<Task> createdTasks = new ArrayList<>();
 
         try {
             if (tasks == null || tasks.isEmpty()) {

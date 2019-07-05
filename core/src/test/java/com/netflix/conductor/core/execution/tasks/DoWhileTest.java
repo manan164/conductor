@@ -144,10 +144,10 @@ public class DoWhileTest {
     public void testConditionException() {
         loopTask.setTaskId("1");
         loopWorkflowTask.setLoopCondition("this will give exception");
-        List<Task> list = Arrays.asList(task1, task2);
-        Mockito.doNothing().when(provider).scheduleLoopTasks(loopTask, workflow);        boolean success = doWhile.execute(workflow, loopTask, provider);
+        Mockito.doNothing().when(provider).scheduleLoopTasks(loopTask, workflow);
+        boolean success = doWhile.execute(workflow, loopTask, provider);
         Assert.assertTrue(success);
-        Assert.assertTrue(loopTask.getStatus() == Task.Status.FAILED);
+        Assert.assertTrue(loopTask.getStatus() == Task.Status.FAILED_WITH_TERMINAL_ERROR);
     }
 
 

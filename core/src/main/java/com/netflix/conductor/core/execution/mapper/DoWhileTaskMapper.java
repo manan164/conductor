@@ -29,7 +29,10 @@ import com.netflix.conductor.dao.MetadataDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * An implementation of {@link TaskMapper} to map a {@link WorkflowTask} of type {@link TaskType#DO_WHILE}
@@ -40,10 +43,8 @@ public class DoWhileTaskMapper implements TaskMapper {
     public static final Logger logger = LoggerFactory.getLogger(DoWhileTaskMapper.class);
 
     private final MetadataDAO metadataDAO;
-    private final ParametersUtils parametersUtils;
 
-    public DoWhileTaskMapper(ParametersUtils parametersUtils, MetadataDAO metadataDAO) {
-        this.parametersUtils = parametersUtils;
+    public DoWhileTaskMapper(MetadataDAO metadataDAO) {
         this.metadataDAO = metadataDAO;
     }
 
@@ -88,7 +89,7 @@ public class DoWhileTaskMapper implements TaskMapper {
         loopTask.setScheduledTime(System.currentTimeMillis());
         loopTask.setTaskId(taskId);
         loopTask.setIteration(1);
-        loopTask.setStatus(Task.Status.IN_PROGRESS);
+        loopTask.setStatus(Task.Status.SCHEDULED);
         loopTask.setWorkflowTask(taskToSchedule);
         loopTask.setRateLimitPerFrequency(taskDefinition.getRateLimitPerFrequency());
         loopTask.setRateLimitFrequencyInSeconds(taskDefinition.getRateLimitFrequencyInSeconds());
@@ -97,11 +98,9 @@ public class DoWhileTaskMapper implements TaskMapper {
 
         tasksToBeScheduled.add(loopTask);
         List<WorkflowTask> loopOverTasks = taskToSchedule.getLoopOver();
-        for (WorkflowTask wft : loopOverTasks) {
-            List<Task> tasks2 = taskMapperContext.getDeciderService()
-                    .getTasksToBeScheduled(workflowInstance, wft, retryCount);
-            tasksToBeScheduled.addAll(tasks2);
-        }
+        List<Task> tasks2 = taskMapperContext.getDeciderService()
+                .getTasksToBeScheduled(workflowInstance, loopOverTasks.get(0), retryCount);
+        tasksToBeScheduled.addAll(tasks2);
 
         return tasksToBeScheduled;
     }

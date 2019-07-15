@@ -65,6 +65,7 @@ import static com.netflix.conductor.common.metadata.tasks.Task.Status.SCHEDULED;
 import static com.netflix.conductor.common.metadata.tasks.Task.Status.SKIPPED;
 import static com.netflix.conductor.common.metadata.tasks.Task.Status.valueOf;
 import static com.netflix.conductor.common.metadata.workflow.TaskType.SUB_WORKFLOW;
+import static com.netflix.conductor.common.metadata.workflow.TaskType.TASK_TYPE_SUB_WORKFLOW;
 import static com.netflix.conductor.common.utils.ExternalPayloadStorage.PayloadType.TASK_OUTPUT;
 import static com.netflix.conductor.common.utils.ExternalPayloadStorage.PayloadType.WORKFLOW_INPUT;
 import static com.netflix.conductor.core.execution.ApplicationException.Code.CONFLICT;
@@ -1346,6 +1347,13 @@ public class WorkflowExecutor {
         // Remove all tasks after the "DO_WHILE" task
         for(Task task: workflow.getTasks()) {
             if (task.getSeq() > loopTask.getSeq()) {
+                if (task.getTaskType().equals(SUB_WORKFLOW.name())) {
+                    try {
+                        executionDAOFacade.removeWorkflow((String) task.getOutputData().get(SUB_WORKFLOW_ID), false);
+                    } catch (ApplicationException e) {
+                        LOGGER.info("Removing non existant workflow " + task.getOutputData().get(SUB_WORKFLOW_ID));
+                    }
+                }
                 executionDAOFacade.removeTask(task.getTaskId());
             }
         }

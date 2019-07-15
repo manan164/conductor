@@ -22,7 +22,6 @@ import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.mockito.Matchers.isA;
@@ -87,15 +86,15 @@ public class DoWhileTest {
         loopTask = new Task();
         loopTask.setReferenceTaskName("loopTask");
         loopTask.setTaskType(TaskType.DO_WHILE.name());
-        loopWorkflowTask = new WorkflowTask();
+        loopWorkflowTask = Mockito.mock(WorkflowTask.class);
         loopWorkflowTask.setTaskReferenceName("loopTask");
         loopWorkflowTask.setName("loopTask");
         loopWorkflowTask.setLoopCondition("if ($.loopTask['iteration'] < 1) { false; } else { true; }");
         loopWorkflowTask.setLoopOver(Arrays.asList(task1.getWorkflowTask(), task2.getWorkflowTask()));
         loopTask.setWorkflowTask(loopWorkflowTask);
         doWhile = new DoWhile();
-        workflow.setTasks(Arrays.asList(task1, task2, loopTask));
         Mockito.doReturn(new TaskDef()).when(provider).getTaskDefinition(loopTask);
+        Mockito.doReturn(Arrays.asList(loopWorkflowTask, loopWorkflowTask1, loopWorkflowTask2)).when(loopWorkflowTask).collectTasks();
         Mockito.doReturn(task1).when(workflow).getTaskByRefName(task1.getReferenceTaskName());
         Mockito.doReturn(task2).when(workflow).getTaskByRefName(task2.getReferenceTaskName());
         Mockito.doReturn(new HashMap<>()).when(parametersUtils).getTaskInputV2(isA(Map.class), isA(Workflow.class), isA(String.class), isA(TaskDef.class));
@@ -133,7 +132,7 @@ public class DoWhileTest {
     @Test
     public void testSingleIteration() {
         loopTask.setStatus(Task.Status.IN_PROGRESS);
-        loopWorkflowTask.setLoopCondition("if ($.loopTask['iteration'] > 1) { false; } else { true; }");
+        Mockito.doReturn("if ($.loopTask['iteration'] > 1) { false; } else { true; }").when(loopWorkflowTask).getLoopCondition();
         Mockito.doNothing().when(provider).scheduleLoopTasks(loopTask, workflow);
         boolean success = doWhile.execute(workflow, loopTask, provider);
         Assert.assertTrue(success);
@@ -143,8 +142,8 @@ public class DoWhileTest {
     @Test
     public void testConditionException() {
         loopTask.setTaskId("1");
-        loopWorkflowTask.setLoopCondition("this will give exception");
         Mockito.doNothing().when(provider).scheduleLoopTasks(loopTask, workflow);
+        Mockito.doReturn("this will give exception").when(loopWorkflowTask).getLoopCondition();
         boolean success = doWhile.execute(workflow, loopTask, provider);
         Assert.assertTrue(success);
         Assert.assertTrue(loopTask.getStatus() == Task.Status.FAILED_WITH_TERMINAL_ERROR);

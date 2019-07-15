@@ -57,9 +57,10 @@ public class DoWhile extends WorkflowSystemTask {
 		boolean allDone = true;
 		boolean hasFailures = false;
 		StringBuilder failureReason = new StringBuilder();
-		List<WorkflowTask> loopOver = task.getWorkflowTask().getLoopOver();
 		Map<String, Object> output = new HashMap<>();
 		task.getOutputData().put("iteration", task.getIteration());
+		List<WorkflowTask> childTasks = task.getWorkflowTask().collectTasks();
+		List<WorkflowTask> loopOver = childTasks.subList(1, childTasks.size());
 
 		for (WorkflowTask workflowTask : loopOver){
 			Task loopOverTask = workflow.getTaskByRefName(workflowTask.getTaskReferenceName());
@@ -73,7 +74,7 @@ public class DoWhile extends WorkflowSystemTask {
 			if (hasFailures){
 				failureReason.append(loopOverTask.getReasonForIncompletion()).append(" ");
 			}
-			output.put(workflowTask.getTaskReferenceName(), loopOverTask.getOutputData());
+			output.put(loopOverTask.getReferenceTaskName(), loopOverTask.getOutputData());
 			allDone = taskStatus.isTerminal();
 			if (!allDone || hasFailures){
 				break;

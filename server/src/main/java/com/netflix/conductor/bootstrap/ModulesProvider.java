@@ -16,6 +16,7 @@ import com.netflix.conductor.core.utils.DummyPayloadStorage;
 import com.netflix.conductor.core.utils.S3PayloadStorage;
 import com.netflix.conductor.dao.RedisWorkflowModule;
 import com.netflix.conductor.elasticsearch.ElasticSearchModule;
+import com.netflix.conductor.jetty.server.spectator.PrometheusMetricsModule;
 import com.netflix.conductor.mysql.MySQLWorkflowModule;
 import com.netflix.conductor.server.*;
 import org.slf4j.Logger;
@@ -132,7 +133,7 @@ public class ModulesProvider implements Provider<List<AbstractModule>> {
         new KafkaPublishTask(configuration, new KafkaProducerManager(configuration));
         new JsonJqTransform();
         modules.add(new ServerModule());
-
+        modules.add(new PrometheusMetricsModule());
         return modules;
     }
 }

@@ -271,8 +271,7 @@ public class KafkaObservableQueue implements ObservableQueue {
       logger.info("polled {} messages from kafka topic.", records.count());
       records.forEach(record -> {
         logger.debug(
-            "Consumer Record: " + "key: {}, " + "value: {}, " + "partition: {}, " + "offset: {}",
-            record.key(), record.value(), record.partition(), record.offset());
+            "Consumer Record: key: "+ record.key() + " value: "+ record.value() + " partition: " + record.partition() + " offset: " + record.offset());
         String id =
             record.key() + ":" + record.topic() + ":" + record.partition() + ":" + record.offset();
         Message message = new Message(id, String.valueOf(record.value()), "");
@@ -302,15 +301,15 @@ public class KafkaObservableQueue implements ObservableQueue {
       RecordMetadata metadata;
       try {
         metadata = producer.send(record).get();
-        logger.debug("Producer Record: key {}, value {}, partition {}, offset {}", record.key(),
-            record.value(), metadata.partition(), metadata.offset());
+        logger.debug(
+                "Producer Record: key: "+ record.key() + " value: "+ record.value() + " partition: " + metadata.partition() + " offset: " + metadata.offset());
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
         logger.error("Publish message to kafka topic {} failed with an error: {}", queueName,
-            e.getMessage(), e);
+            e.getMessage());
       } catch (ExecutionException e) {
         logger.error("Publish message to kafka topic {} failed with an error: {}", queueName,
-            e.getMessage(), e);
+            e.getMessage());
         throw new ApplicationException(ApplicationException.Code.INTERNAL_ERROR,
             "Failed to publish the event");
       }

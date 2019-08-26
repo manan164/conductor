@@ -116,7 +116,7 @@ public class Monitors {
 		});
 	}
 
-	private static AtomicLong getGauge(String className, String name, String... additionalTags) {
+	public static AtomicLong getGauge(String className, String name, String... additionalTags) {
 		Map<String, String> tags = toMap(className, additionalTags);
 
 		return gauges.computeIfAbsent(name, s -> new ConcurrentHashMap<>()).computeIfAbsent(tags, t -> {
@@ -266,5 +266,9 @@ public class Monitors {
 
 	public static void recordDiscardedIndexingCount() {
 		counter(classQualifier, "discarded_index_count");
+	}
+
+	public static void recordESIndexTime(String docType, long val) {
+		getTimer(Monitors.classQualifier, docType, docType).record(val, TimeUnit.MILLISECONDS);
 	}
 }

@@ -662,7 +662,6 @@ public class ElasticSearchRestDAOV5 implements IndexDAO {
         bulkRequests.get(docType).add(request);
         if (bulkRequests.get(docType).size() >= this.indexBatchSize) {
             indexWithRetry(bulkRequests.get(docType), "Indexing " + docType + ": " + docId);
-            bulkRequests.put(docType, new ArrayList<>(this.indexBatchSize));
         }
     }
 

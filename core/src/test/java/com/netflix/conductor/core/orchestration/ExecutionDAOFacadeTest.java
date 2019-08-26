@@ -15,6 +15,7 @@ package com.netflix.conductor.core.orchestration;
 import com.amazonaws.util.IOUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.conductor.common.metadata.events.EventExecution;
+import com.netflix.conductor.common.metadata.tasks.Task;
 import com.netflix.conductor.common.run.SearchResult;
 import com.netflix.conductor.common.run.Workflow;
 import com.netflix.conductor.common.utils.JsonMapperProvider;
@@ -43,6 +44,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 
 public class ExecutionDAOFacadeTest {
 
@@ -156,4 +159,43 @@ public class ExecutionDAOFacadeTest {
         assertTrue(added);
         verify(indexDAO, times(1)).addEventExecution(any());
     }
+
+    @Test
+    public void updateInprogressTask() throws Exception {
+        Task t = new Task();
+        t.setStatus(Task.Status.IN_PROGRESS);
+        doNothing().when(executionDAO).updateTask(any());
+        executionDAOFacade.updateTask(t);
+        verify(indexDAO, times(0)).asyncIndexTask(any());
+    }
+
+    @Test
+    public void updateTerminalTask() throws Exception {
+        Task t = new Task();
+        t.setStatus(Task.Status.FAILED);
+        doNothing().when(executionDAO).updateTask(any());
+        doReturn(null).when(indexDAO).asyncIndexTask(any());
+        executionDAOFacade.updateTask(t);
+        verify(indexDAO, times(1)).asyncIndexTask(any());
+    }
+
+    @Test
+    public void updateInprogressWorkflow() throws Exception {
+        Workflow w = new Workflow();
+        w.setStatus(Workflow.WorkflowStatus.RUNNING);
+        doReturn(null).when(executionDAO).updateWorkflow(any());
+        executionDAOFacade.updateWorkflow(w);
+        verify(indexDAO, times(0)).asyncIndexWorkflow(any());
+    }
+
+    @Test
+    public void updateTerminalWorkflow() throws Exception {
+        Workflow w = new Workflow();
+        w.setStatus(Workflow.WorkflowStatus.COMPLETED);
+        doReturn(null).when(executionDAO).updateWorkflow(any());
+        doReturn(null).when(indexDAO).asyncIndexWorkflow(any());
+        executionDAOFacade.updateWorkflow(w);
+        verify(indexDAO, times(1)).asyncIndexWorkflow(any());
+    }
+
 }

@@ -144,6 +144,7 @@ public class ElasticSearchDAOV5 implements IndexDAO {
             new LinkedBlockingQueue<>(workerQueueSize),
                 (runnable, executor) -> {
                     logger.warn("Request  {} to async dao discarded in executor {}", runnable, executor);
+                    Monitors.recordDiscardedIndexingCount();
                 });
     }
 

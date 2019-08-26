@@ -259,4 +259,12 @@ public class Monitors {
 	public static void recordDaoError(String dao, String action) {
 		counter(classQualifier, "dao_errors", "dao", dao, "action", action);
 	}
+
+	public static void recordIndexingCount() {
+		counter(classQualifier, "indexing_count");
+	}
+
+	public static void recordDiscardedIndexingCount() {
+		counter(classQualifier, "discarded_index_count");
+	}
 }

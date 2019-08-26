@@ -169,7 +169,10 @@ public class ExecutionDAOFacade {
     public String createWorkflow(Workflow workflow) {
         workflow.setCreateTime(System.currentTimeMillis());
         executionDAO.createWorkflow(workflow);
-        indexDAO.asyncIndexWorkflow(workflow);
+        if (workflow.getStatus().isTerminal()) {
+            Monitors.recordIndexingCount();
+            indexDAO.asyncIndexWorkflow(workflow);
+        }
         return workflow.getWorkflowId();
     }
 
@@ -185,7 +188,10 @@ public class ExecutionDAOFacade {
             workflow.setEndTime(System.currentTimeMillis());
         }
         executionDAO.updateWorkflow(workflow);
-        indexDAO.asyncIndexWorkflow(workflow);
+        if (workflow.getStatus().isTerminal()) {
+            Monitors.recordIndexingCount();
+            indexDAO.asyncIndexWorkflow(workflow);
+        }
         return workflow.getWorkflowId();
     }
 
@@ -270,7 +276,10 @@ public class ExecutionDAOFacade {
                 }
             }
             executionDAO.updateTask(task);
-            indexDAO.asyncIndexTask(task);
+            if (task.getStatus().isTerminal()) {
+                Monitors.recordIndexingCount();
+                indexDAO.asyncIndexTask(task);
+            }
         } catch (Exception e) {
             String errorMsg = String.format("Error updating task: %s in workflow: %s", task.getTaskId(), task.getWorkflowInstanceId());
             LOGGER.error(errorMsg, e);

@@ -68,6 +68,7 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.xcontent.XContentType;
@@ -115,7 +116,6 @@ public class ElasticSearchDAOV5 implements IndexDAO {
     private final ExecutorService executorService;
     private final int archiveSearchBatchSize;
     private ConcurrentHashMap<String, BulkRequestBuilder> bulkRequests;
-    private final int indexBatchSize;
 
     static {
         SIMPLE_DATE_FORMAT.setTimeZone(GMT);
@@ -130,7 +130,6 @@ public class ElasticSearchDAOV5 implements IndexDAO {
         this.logIndexPrefix = config.getTasklogIndexName();
         this.archiveSearchBatchSize = config.getArchiveSearchBatchSize();
         this.bulkRequests = new ConcurrentHashMap<>();
-        this.indexBatchSize = config.getIndexBatchSize();
 
         int corePoolSize = 6;
         int maximumPoolSize = config.getAsyncMaxPoolSize();
@@ -292,10 +291,10 @@ public class ElasticSearchDAOV5 implements IndexDAO {
             req.upsert(doc, XContentType.JSON);
             req.retryOnConflict(5);
 
-            indexObject(req, WORKFLOW_DOC_TYPE);
+            updateWithRetry(req, "Index workflow into doc_type workflow");
 
             logger.debug("Time taken {} for  request {}, index {}", Instant.now().toEpochMilli() - startTime, req, req);
-            Monitors.recordESIndexTime("index_workflow", Instant.now().toEpochMilli() - startTime);
+            Monitors.getGauge(Monitors.classQualifier, "index_workflow").set(Instant.now().toEpochMilli() - startTime);
             Monitors.getGauge(Monitors.classQualifier, "worker_queue", "worker_queue").set(((ThreadPoolExecutor) executorService).getQueue().size());
         } catch (Exception e) {
             logger.error("Failed to index workflow: {}", workflow.getWorkflowId(), e);
@@ -318,10 +317,9 @@ public class ElasticSearchDAOV5 implements IndexDAO {
             UpdateRequest req = new UpdateRequest(indexName, TASK_DOC_TYPE, id);
             req.doc(doc, XContentType.JSON);
             req.upsert(doc, XContentType.JSON);
-            indexObject(req, TASK_DOC_TYPE);
+            updateWithRetry(req, "Index workflow into doc_type workflow");
             logger.debug("Time taken {} for  request {}, index {}", Instant.now().toEpochMilli() - startTime, req, req);
-            Monitors.recordESIndexTime("index_task", Instant.now().toEpochMilli() - startTime);
-            Monitors.getGauge(Monitors.classQualifier, "worker_queue", "worker_queue").set(((ThreadPoolExecutor) executorService).getQueue().size());
+            Monitors.getGauge(Monitors.classQualifier, "index_task").set(Instant.now().toEpochMilli() - startTime);
         } catch (Exception e) {
             logger.error("Failed to index task: {}", task.getTaskId(), e);
         }
@@ -438,7 +436,7 @@ public class ElasticSearchDAOV5 implements IndexDAO {
             req.upsert(doc, XContentType.JSON);
             req.retryOnConflict(5);
 
-            indexObject(req, EVENT_DOC_TYPE);
+            updateWithRetry(req, "Update Event execution for doc_type event");
         } catch (Exception e) {
             logger.error("Failed to index event execution: {}", eventExecution.getId(), e);
         }
@@ -449,26 +447,15 @@ public class ElasticSearchDAOV5 implements IndexDAO {
         return CompletableFuture.runAsync(() -> addEventExecution(eventExecution), executorService);
     }
 
-    private void indexObject(UpdateRequest req, String docType) {
-        if (bulkRequests.get(docType) == null) {
-            bulkRequests.put(docType, elasticSearchClient.prepareBulk());
-        }
-        bulkRequests.get(docType).add(req);
-        if (bulkRequests.get(docType).numberOfActions() >= this.indexBatchSize) {
-            updateWithRetry(bulkRequests.get(docType), docType);
-            bulkRequests.put(docType, elasticSearchClient.prepareBulk());
-        }
-    }
-
-    public void updateWithRetry(BulkRequestBuilder request, String docType) {
+    private void updateWithRetry(UpdateRequest request, String operationDescription) {
         try {
-            new RetryUtil<BulkResponse>().retryOnException(
-                    () -> request.execute().actionGet(),
+            new RetryUtil<UpdateResponse>().retryOnException(
+                    () -> elasticSearchClient.update(request).actionGet(),
                     null,
-                    BulkResponse::hasFailures,
+                    null,
                     RETRY_COUNT,
-                    "Indexing all "+ docType + " task",
-                    docType
+                    operationDescription,
+                    "updateWithRetry"
             );
         } catch (Exception e) {
             Monitors.error(className, "index");

@@ -260,7 +260,7 @@ public class Monitors {
 		counter(classQualifier, "dao_errors", "dao", dao, "action", action);
 	}
 
-	public static void recordESIndexTime(String docType, long val) {
-		getTimer(Monitors.classQualifier, docType, docType).record(val, TimeUnit.MILLISECONDS);
+	public static void recordDiscardedIndexingCount() {
+		counter(classQualifier, "discarded_index_count");
 	}
 }

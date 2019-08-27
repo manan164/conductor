@@ -115,7 +115,6 @@ public class ElasticSearchDAOV5 implements IndexDAO {
     private final Client elasticSearchClient;
     private final ExecutorService executorService;
     private final int archiveSearchBatchSize;
-    private ConcurrentHashMap<String, BulkRequestBuilder> bulkRequests;
 
     static {
         SIMPLE_DATE_FORMAT.setTimeZone(GMT);
@@ -129,7 +128,6 @@ public class ElasticSearchDAOV5 implements IndexDAO {
         this.indexName = config.getIndexName();
         this.logIndexPrefix = config.getTasklogIndexName();
         this.archiveSearchBatchSize = config.getArchiveSearchBatchSize();
-        this.bulkRequests = new ConcurrentHashMap<>();
 
         int corePoolSize = 6;
         int maximumPoolSize = config.getAsyncMaxPoolSize();

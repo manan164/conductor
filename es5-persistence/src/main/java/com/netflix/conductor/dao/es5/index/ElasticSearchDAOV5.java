@@ -461,7 +461,7 @@ public class ElasticSearchDAOV5 implements IndexDAO {
         }
     }
 
-    public void updateWithRetry(BulkRequestBuilder request, String docType) {
+    public synchronized void updateWithRetry(final BulkRequestBuilder request, String docType) {
         try {
             new RetryUtil<BulkResponse>().retryOnException(
                     () -> request.execute().actionGet(),

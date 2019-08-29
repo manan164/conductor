@@ -212,6 +212,10 @@ public class Monitors {
 		counter(classQualifier, "task_update_conflict", "workflowName", workflowType, "taskType", taskType, "taskStatus", status.name());
 	}
 
+	public static void recordTaskUpdateError(String taskType, String workflowType) {
+		counter(classQualifier, "task_update_error", "workflowName", workflowType, "taskType", taskType);
+	}
+
 	public static void recordWorkflowCompletion(String workflowType, long duration, String ownerApp) {
 		getTimer(classQualifier, "workflow_execution", "workflowName", workflowType, "ownerApp", ""+ownerApp).record(duration, TimeUnit.MILLISECONDS);
 	}
@@ -262,5 +266,9 @@ public class Monitors {
 
 	public static void recordESIndexTime(String docType, long val) {
 		getTimer(Monitors.classQualifier, docType, docType).record(val, TimeUnit.MILLISECONDS);
+	}
+
+	public static void recordAckTaskError(String taskType) {
+		counter(classQualifier, "task_ack_error", "taskType", taskType);
 	}
 }

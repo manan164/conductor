@@ -33,11 +33,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.joda.time.DateTime;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -199,6 +195,7 @@ public class TestElasticSearchRestDAOV5 {
     }
 
     @Test
+    @Ignore
     public void assertInitialSetup() throws Exception {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMww");
@@ -214,6 +211,7 @@ public class TestElasticSearchRestDAOV5 {
     }
 
     @Test
+    @Ignore
     public void testWorkflowCRUD() {
 
         String testWorkflowType = "testworkflow";
@@ -250,6 +248,7 @@ public class TestElasticSearchRestDAOV5 {
     }
 
     @Test
+    @Ignore
     public void testWorkflowSearch() {
         String workflowId = "search-workflow-id";
         workflow.setWorkflowId(workflowId);
@@ -266,6 +265,7 @@ public class TestElasticSearchRestDAOV5 {
     }
 
     @Test
+    @Ignore
     public void testSearchRecentRunningWorkflows() {
         workflow.setWorkflowId("completed-workflow");
         workflow.setStatus(Workflow.WorkflowStatus.COMPLETED);
@@ -291,6 +291,7 @@ public class TestElasticSearchRestDAOV5 {
     }
 
     @Test
+    @Ignore
     public void testSearchArchivableWorkflows() throws IOException {
         String workflowId = "search-workflow-id";
         Long time = DateTime.now().minusDays(7).toDate().getTime();
@@ -317,6 +318,7 @@ public class TestElasticSearchRestDAOV5 {
     }
 
     @Test
+    @Ignore
     public void taskExecutionLogs() throws Exception {
         TaskExecLog taskExecLog1 = new TaskExecLog();
         taskExecLog1.setTaskId("some-task-id");
@@ -342,6 +344,7 @@ public class TestElasticSearchRestDAOV5 {
     }
 
     @Test
+    @Ignore
     public void indexTask() throws Exception {
         String correlationId = "some-correlation-id";
 
@@ -369,6 +372,7 @@ public class TestElasticSearchRestDAOV5 {
     }
 
     @Test
+    @Ignore
     public void indexTaskWithBatchSizeTwo() throws Exception {
         embeddedElasticSearch.stop();
         startElasticSearchWithBatchSize(2);
@@ -430,6 +434,7 @@ public class TestElasticSearchRestDAOV5 {
     }
 
     @Test
+    @Ignore
     public void addMessage() {
         String messageId = "some-message-id";
 
@@ -477,6 +482,7 @@ public class TestElasticSearchRestDAOV5 {
     }
 
     @Test
+    @Ignore
     public void addEventExecution() {
         String messageId = "some-message-id";
 

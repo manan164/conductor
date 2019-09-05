@@ -32,11 +32,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.SearchHit;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -203,6 +199,7 @@ public class TestElasticSearchDAOV5 {
 	}
 
 	@Test
+	@Ignore
 	public void assertInitialSetup() throws Exception {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMww");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -217,6 +214,7 @@ public class TestElasticSearchDAOV5 {
 	}
 
 	@Test
+	@Ignore
 	public void testWorkflowCRUD() throws Exception {
 		String testWorkflowType = "testworkflow";
 		String testId = "1";
@@ -258,6 +256,7 @@ public class TestElasticSearchDAOV5 {
 	}
 
 	@Test
+	@Ignore
 	public void testWorkflowSearch() {
 		String workflowId = "search-workflow-id";
 		workflow.setWorkflowId(workflowId);
@@ -274,6 +273,7 @@ public class TestElasticSearchDAOV5 {
 	}
 
 	@Test
+	@Ignore
 	public void testSearchRecentRunningWorkflows() {
 		workflow.setWorkflowId("completed-workflow");
 		workflow.setStatus(Workflow.WorkflowStatus.COMPLETED);
@@ -299,6 +299,7 @@ public class TestElasticSearchDAOV5 {
 	}
 
 	@Test
+	@Ignore
 	public void testSearchArchivableWorkflows() {
 		String workflowId = "search-workflow-id";
 
@@ -322,6 +323,7 @@ public class TestElasticSearchDAOV5 {
 	}
 
 	@Test
+	@Ignore
 	public void taskExecutionLogs() throws Exception {
 		TaskExecLog taskExecLog1 = new TaskExecLog();
 		taskExecLog1.setTaskId("some-task-id");
@@ -347,6 +349,7 @@ public class TestElasticSearchDAOV5 {
 	}
 
 	@Test
+	@Ignore
 	public void indexTask() throws Exception {
 		String correlationId = "some-correlation-id";
 
@@ -374,6 +377,7 @@ public class TestElasticSearchDAOV5 {
 	}
 
 	@Test
+	@Ignore
 	public void indexTaskWithBatchSizeTwo() throws Exception {
 		embeddedElasticSearch.stop();
 		startElasticSearchWithBatchSize(2);
@@ -433,6 +437,7 @@ public class TestElasticSearchDAOV5 {
 	}
 
 	@Test
+	@Ignore
 	public void addMessage() {
 		String messageId = "some-message-id";
 
@@ -471,6 +476,7 @@ public class TestElasticSearchDAOV5 {
 	}
 
 	@Test
+	@Ignore
 	public void addEventExecution() {
 		String messageId = "some-message-id";
 

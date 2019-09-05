@@ -11,14 +11,14 @@
             "properties": {
                 "action": {
                     "type": "keyword",
-                    "index": true
+                    "index": false
                 },
                 "created": {
                     "type": "long"
                 },
                 "event": {
                     "type": "keyword",
-                    "index": true
+                    "index": false
                 },
                 "id": {
                     "type": "keyword",
@@ -26,23 +26,23 @@
                 },
                 "messageId": {
                     "type": "keyword",
-                    "index": true
+                    "index": false
                 },
                 "name": {
                     "type": "keyword",
-                    "index": true
+                    "index": false
                 },
                 "output": {
                     "properties": {
                         "workflowId": {
                             "type": "keyword",
-                            "index": true
+                            "index": false
                         }
                     }
                 },
                 "status": {
                     "type": "keyword",
-                    "index": true
+                    "index": false
                 }
             }
         },
@@ -53,7 +53,7 @@
                 },
                 "log": {
                     "type": "keyword",
-                    "index": true
+                    "index": false
                 },
                 "taskId": {
                     "type": "keyword",
@@ -72,11 +72,11 @@
                 },
                 "payload": {
                     "type": "keyword",
-                    "index": true
+                    "index": false
                 },
                 "queue": {
                     "type": "keyword",
-                    "index": true
+                    "index": false
                 }
             }
         }

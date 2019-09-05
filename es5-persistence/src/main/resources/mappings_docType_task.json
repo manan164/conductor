@@ -3,7 +3,7 @@
     "properties": {
       "correlationId": {
         "type": "keyword",
-        "index": true
+        "index": false
       },
       "endTime": {
         "type": "date",

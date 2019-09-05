@@ -21,11 +21,11 @@
       },
       "input": {
         "type": "text",
-        "index": true
+        "index": false
       },
       "output": {
         "type": "text",
-        "index": true
+        "index": false
       },
       "reasonForIncompletion": {
         "type": "keyword",
@@ -67,7 +67,7 @@
       },
       "event": {
         "type": "keyword",
-        "index": true
+        "index": false
       }
     }
   }

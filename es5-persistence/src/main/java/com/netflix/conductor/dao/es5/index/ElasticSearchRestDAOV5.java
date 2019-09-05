@@ -114,7 +114,7 @@ public class ElasticSearchRestDAOV5 implements IndexDAO {
         this.objectMapper = objectMapper;
         this.elasticSearchAdminClient = lowLevelRestClient;
         this.elasticSearchClient = new RestHighLevelClient(lowLevelRestClient);
-        this.indexName = config.getIndexName();
+        this.indexName = config.getIndexName() + System.currentTimeMillis();
         this.logIndexPrefix = config.getTasklogIndexName();
         this.clusterHealthColor = config.getClusterHealthColor();
         this.bulkRequests = new ConcurrentHashMap<>();

@@ -3,7 +3,7 @@
     "properties": {
       "correlationId": {
         "type": "keyword",
-        "index": true,
+        "index": false,
         "doc_values": true
       },
       "endTime": {
@@ -29,7 +29,7 @@
       },
       "reasonForIncompletion": {
         "type": "keyword",
-        "index": true,
+        "index": false,
         "doc_values": true
       },
       "startTime": {
@@ -39,7 +39,7 @@
       },
       "status": {
         "type": "keyword",
-        "index": true,
+        "index": false,
         "doc_values": true
       },
       "updateTime": {
@@ -58,7 +58,7 @@
       },
       "workflowType": {
         "type": "keyword",
-        "index": true,
+        "index": false,
         "doc_values": true
       },
       "rawJSON": {

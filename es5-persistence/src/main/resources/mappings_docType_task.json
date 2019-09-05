@@ -14,18 +14,18 @@
       },
       "input": {
         "type": "text",
-        "index": true
+        "index": false
       },
       "output": {
         "type": "text",
-        "index": true
+        "index": false
       },
       "queueWaitTime": {
         "type": "long"
       },
       "reasonForIncompletion": {
         "type": "keyword",
-        "index": true
+        "index": false
       },
       "scheduledTime": {
         "type": "date",
@@ -37,11 +37,11 @@
       },
       "status": {
         "type": "keyword",
-        "index": true
+        "index": false
       },
       "taskDefName": {
         "type": "keyword",
-        "index": true
+        "index": false
       },
       "taskId": {
         "type": "keyword",
@@ -49,7 +49,7 @@
       },
       "taskType": {
         "type": "keyword",
-        "index": true
+        "index": false
       },
       "updateTime": {
         "type": "date",
@@ -61,7 +61,7 @@
       },
       "workflowType": {
         "type": "keyword",
-        "index": true
+        "index": false
       }
     }
   }

@@ -261,6 +261,6 @@ public class Monitors {
 	}
 
 	public static void recordESIndexTime(String docType, long val) {
-		getTimer(Monitors.classQualifier, docType, docType).record(val, TimeUnit.MILLISECONDS);
+		getGauge(Monitors.classQualifier, docType, docType).set(val);
 	}
 }

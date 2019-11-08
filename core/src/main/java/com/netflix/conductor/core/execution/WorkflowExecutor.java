@@ -12,6 +12,8 @@
  */
 package com.netflix.conductor.core.execution;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.netflix.conductor.annotations.Trace;
@@ -25,6 +27,7 @@ import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
 import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
 import com.netflix.conductor.common.run.Workflow;
 import com.netflix.conductor.common.run.Workflow.WorkflowStatus;
+import com.netflix.conductor.common.run.WorkflowSummary;
 import com.netflix.conductor.common.utils.RetryUtil;
 import com.netflix.conductor.core.WorkflowContext;
 import com.netflix.conductor.core.config.Configuration;
@@ -85,6 +88,7 @@ public class WorkflowExecutor {
     private final Configuration config;
     private final MetadataMapperService metadataMapperService;
     private final ExecutionDAOFacade executionDAOFacade;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private WorkflowStatusListener workflowStatusListener;
     private ExternalPayloadStorageUtils externalPayloadStorageUtils;
@@ -395,7 +399,12 @@ public class WorkflowExecutor {
             LOGGER.info("A new instance of workflow: {} created with id: {}", workflow.getWorkflowName(), workflowId);
             //then decide to see if anything needs to be done as part of the workflow
             decide(workflowId);
-            return workflowId;
+            try {
+                String workflowSummary = objectMapper.writeValueAsString(new WorkflowSummary(executionDAOFacade.getWorkflowById(workflowId, false)));
+                return workflowSummary;
+            } catch(JsonProcessingException e) {
+                return workflowId;
+            }
         } catch (Exception e) {
             executionDAOFacade.removeWorkflow(workflowId, false);
             Monitors.recordWorkflowStartError(workflowDefinition.getName(), WorkflowContext.get().getClientApp());
@@ -662,7 +671,7 @@ public class WorkflowExecutor {
         queueDAO.remove(DECIDER_QUEUE, workflow.getWorkflowId());    //remove from the sweep queue
 
         //Remove workflow from redis irrespective of status listener.
-        workflowStatusListener.onWorkflowCompleted(workflow);
+//        workflowStatusListener.onWorkflowCompleted(workflow);
     }
 
     public void terminateWorkflow(String workflowId, String reason) {

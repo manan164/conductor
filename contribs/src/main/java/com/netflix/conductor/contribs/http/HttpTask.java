@@ -239,7 +239,7 @@ public class HttpTask extends WorkflowSystemTask {
 	
 	@Override
 	public boolean isAsync() {
-		return true;
+		return false;
 	}
 	
 	@Override

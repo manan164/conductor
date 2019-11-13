@@ -19,13 +19,13 @@ public class ArchiveWorkflowStatusListener implements WorkflowStatusListener {
     @Override
     public void onWorkflowCompleted(Workflow workflow) {
         LOG.debug("Workflow {} is completed", workflow.getWorkflowId());
-        removeWorkflow(workflow.getWorkflowId(), true);
+        removeWorkflow(workflow.getWorkflowId(), false);
     }
 
     @Override
     public void onWorkflowTerminated(Workflow workflow) {
         LOG.debug("Workflow {} is terminated", workflow.getWorkflowId());
-        removeWorkflow(workflow.getWorkflowId(), true);
+        removeWorkflow(workflow.getWorkflowId(), false);
     }
 
     private void removeWorkflow(String workflowId, boolean shouldArchive) {

@@ -211,7 +211,7 @@ public class ExecutionDAOFacade {
                         new Object[]{objectMapper.writeValueAsString(workflow), true});
             } else {
                 // Not archiving, also remove workflowId from index
-                indexDAO.removeWorkflow(workflowId);
+                indexDAO.asyncRemoveWorkflow(workflowId);
             }
 
             // remove workflow from DAO

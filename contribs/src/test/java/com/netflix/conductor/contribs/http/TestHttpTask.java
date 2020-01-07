@@ -28,6 +28,7 @@ import com.netflix.conductor.common.metadata.workflow.TaskType;
 import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
 import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
 import com.netflix.conductor.common.run.Workflow;
+import com.netflix.conductor.common.utils.JsonMapperProvider;
 import com.netflix.conductor.contribs.http.HttpTask.Input;
 import com.netflix.conductor.core.config.Configuration;
 import com.netflix.conductor.core.execution.DeciderService;
@@ -83,14 +84,14 @@ public class TestHttpTask {
 
     private static Server server;
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static ObjectMapper objectMapper = new JsonMapperProvider().get();
 
     @BeforeClass
     public static void init() throws Exception {
-
         Map<String, Object> map = new HashMap<>();
         map.put("key", "value1");
         map.put("num", 42);
+        map.put("SomeKey", null);
         JSON_RESPONSE = objectMapper.writeValueAsString(map);
 
         server = new Server(7009);
@@ -116,7 +117,7 @@ public class TestHttpTask {
         config = mock(Configuration.class);
         RestClientManager rcm = new RestClientManager(Mockito.mock(Configuration.class));
         when(config.getServerId()).thenReturn("test_server_id");
-        httpTask = new HttpTask(rcm, config);
+        httpTask = new HttpTask(rcm, config, objectMapper);
     }
 
     @Test
@@ -128,6 +129,7 @@ public class TestHttpTask {
         Map<String, Object> body = new HashMap<>();
         body.put("input_key1", "value1");
         body.put("input_key2", 45.3d);
+        body.put("someKey", null);
         input.setBody(body);
         input.setMethod("POST");
         task.getInputData().put(HttpTask.REQUEST_PARAMETER_NAME, input);

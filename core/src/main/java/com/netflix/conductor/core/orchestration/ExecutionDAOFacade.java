@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.conductor.common.metadata.events.EventExecution;
 import com.netflix.conductor.common.metadata.tasks.PollData;
 import com.netflix.conductor.common.metadata.tasks.Task;
+import com.netflix.conductor.common.metadata.tasks.TaskDef;
 import com.netflix.conductor.common.metadata.tasks.TaskExecLog;
 import com.netflix.conductor.common.run.SearchResult;
 import com.netflix.conductor.common.run.Workflow;
@@ -28,6 +29,7 @@ import com.netflix.conductor.dao.IndexDAO;
 import com.netflix.conductor.dao.RateLimitingDao;
 import com.netflix.conductor.metrics.Monitors;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -268,23 +270,19 @@ public class ExecutionDAOFacade {
 
     /**
      * Reset the workflow state by removing from the {@link ExecutionDAO} and
-     * archiving this workflow in the {@link IndexDAO}.
+     * removing this workflow from the {@link IndexDAO}.
      *
      * @param workflowId the workflow id to be reset
      */
     public void resetWorkflow(String workflowId) {
         try {
             Workflow workflow = getWorkflowById(workflowId, true);
-            if (config.enableAsyncIndexing()) {
-                indexDAO.asyncUpdateWorkflow(workflowId,
-                    new String[]{RAW_JSON_FIELD, ARCHIVED_FIELD},
-                    new Object[]{objectMapper.writeValueAsString(workflow), true});
-            } else {
-                indexDAO.updateWorkflow(workflowId,
-                    new String[]{RAW_JSON_FIELD, ARCHIVED_FIELD},
-                    new Object[]{objectMapper.writeValueAsString(workflow), true});
-            }
             executionDAO.removeWorkflow(workflowId);
+            if (config.enableAsyncIndexing()) {
+                indexDAO.asyncRemoveWorkflow(workflowId);
+            } else {
+                indexDAO.removeWorkflow(workflowId);
+            }
         } catch (ApplicationException ae) {
             throw ae;
         } catch (Exception e) {
@@ -398,15 +396,18 @@ public class ExecutionDAOFacade {
         return executionDAO.exceedsInProgressLimit(task);
     }
 
-    public boolean exceedsRateLimitPerFrequency(Task task) {
-        return rateLimitingDao.exceedsRateLimitPerFrequency(task);
+    public boolean exceedsRateLimitPerFrequency(Task task, TaskDef taskDef) {
+        return rateLimitingDao.exceedsRateLimitPerFrequency(task, taskDef);
     }
 
     public void addTaskExecLog(List<TaskExecLog> logs) {
-        if (config.enableAsyncIndexing()) {
-            indexDAO.asyncAddTaskExecutionLogs(logs);
-        } else {
-            indexDAO.addTaskExecutionLogs(logs);
+        if (config.isTaskExecLogIndexingEnabled()) {
+            if (config.enableAsyncIndexing()) {
+                indexDAO.asyncAddTaskExecutionLogs(logs);
+            }
+            else {
+                indexDAO.addTaskExecutionLogs(logs);
+            }
         }
     }
 
@@ -423,7 +424,7 @@ public class ExecutionDAOFacade {
     }
 
     public List<TaskExecLog> getTaskExecutionLogs(String taskId) {
-        return indexDAO.getTaskExecutionLogs(taskId);
+        return config.isTaskExecLogIndexingEnabled() ? indexDAO.getTaskExecutionLogs(taskId) : Collections.emptyList();
     }
 
     class DelayWorkflowUpdate implements Runnable {

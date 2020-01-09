@@ -20,6 +20,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.junit.rules.TestName;
 
 import java.util.List;
@@ -28,6 +29,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @SuppressWarnings("Duplicates")
+@Ignore
 public class MySQLExecutionDAOTest extends ExecutionDAOTest {
 
     private MySQLDAOTestUtil testMySQL;

@@ -24,4 +24,4 @@ public interface ProducerDAO {
 
     void send(String documentType, Object data);
 
-}
+} 

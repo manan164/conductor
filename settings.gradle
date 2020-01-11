@@ -1,10 +1,6 @@
 rootProject.name='conductor'
 
-<<<<<<< HEAD
 include 'client','common','contribs','core', 'es5-persistence', 'kafka-persistence', 'jersey', 'postgres-persistence', 'zookeeper-lock', 'redis-lock'
-=======
-include 'client','common','contribs','core', 'es5-persistence','jersey', 'kafka-persistence'
->>>>>>> 93d9cb52dffc766bf66b8c609e6c926ba8736909
 include 'cassandra-persistence', 'mysql-persistence', 'redis-persistence','server','test-harness','ui'
 include 'grpc', 'grpc-server', 'grpc-client'
 

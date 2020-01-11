@@ -63,6 +63,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-core": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es5-persistence": {
             "project": true
         },
         "com.netflix.servo:servo-core": {
@@ -84,6 +90,9 @@
             "locked": "0.3.1"
         },
         "commons-io:commons-io": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
             "locked": "2.4",
             "requested": "2.4"
         },
@@ -202,6 +211,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-core": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es5-persistence": {
             "project": true
         },
         "com.netflix.servo:servo-core": {
@@ -223,6 +238,9 @@
             "locked": "0.3.1"
         },
         "commons-io:commons-io": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
             "locked": "2.4",
             "requested": "2.4"
         },
@@ -341,6 +359,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-core": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es5-persistence": {
             "project": true
         },
         "com.netflix.servo:servo-core": {
@@ -362,6 +386,9 @@
             "locked": "0.3.1"
         },
         "commons-io:commons-io": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
             "locked": "2.4",
             "requested": "2.4"
         },
@@ -492,6 +519,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-core": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es5-persistence": {
             "project": true
         },
         "com.netflix.servo:servo-core": {
@@ -513,6 +546,9 @@
             "locked": "0.3.1"
         },
         "commons-io:commons-io": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
             "locked": "2.4",
             "requested": "2.4"
         },
@@ -631,6 +667,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-core": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es5-persistence": {
             "project": true
         },
         "com.netflix.servo:servo-core": {
@@ -652,6 +694,9 @@
             "locked": "0.3.1"
         },
         "commons-io:commons-io": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
             "locked": "2.4",
             "requested": "2.4"
         },
@@ -770,6 +815,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-core": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es5-persistence": {
             "project": true
         },
         "com.netflix.servo:servo-core": {
@@ -791,6 +842,9 @@
             "locked": "0.3.1"
         },
         "commons-io:commons-io": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
             "locked": "2.4",
             "requested": "2.4"
         },
@@ -929,6 +983,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-core": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es5-persistence": {
             "project": true
         },
         "com.netflix.servo:servo-core": {
@@ -950,6 +1010,9 @@
             "locked": "0.3.1"
         },
         "commons-io:commons-io": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
             "locked": "2.4",
             "requested": "2.4"
         },
@@ -1088,6 +1151,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-core": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es5-persistence": {
             "project": true
         },
         "com.netflix.servo:servo-core": {
@@ -1109,6 +1178,9 @@
             "locked": "0.3.1"
         },
         "commons-io:commons-io": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
             "locked": "2.4",
             "requested": "2.4"
         },
@@ -1247,6 +1319,12 @@
             "project": true
         },
         "com.netflix.conductor:conductor-core": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
+            "project": true
+        },
+        "com.netflix.conductor:conductor-es5-persistence": {
             "project": true
         },
         "com.netflix.servo:servo-core": {
@@ -1268,6 +1346,9 @@
             "locked": "0.3.1"
         },
         "commons-io:commons-io": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-es5-persistence"
+            ],
             "locked": "2.4",
             "requested": "2.4"
         },

@@ -52,9 +52,6 @@ public interface Configuration {
 
     String JERSEY_ENABLED_PROPERTY_NAME = "conductor.jersey.enabled";
     boolean JERSEY_ENABLED_DEFAULT_VALUE = true;
-
-    String KAFKA_INDEX_ENABLE = "workflow.kafka.index.enable";
-
     String ASYNC_INDEXING_ENABLED_PROPERTY_NAME = "async.indexing.enabled";
     boolean ASYNC_INDEXING_ENABLED_DEFAULT_VALUE = false;
 
@@ -74,6 +71,7 @@ public interface Configuration {
 
     String IGNORE_LOCKING_EXCEPTIONS_PROPERTY_NAME = "workflow.decider.locking.exceptions.ignore";
     boolean IGNORE_LOCKING_EXCEPTIONS_DEFAULT_VALUE = false;
+    String KAFKA_INDEX_ENABLE = "workflow.kafka.index.enable";
 
     String FORCE_WORKFLOW_DELETION = "force.workflow.deletion";
     String TASKEXECLOG_INDEXING_ENABLED_PROPERTY_NAME = "workflow.taskExecLog.indexing.enabled";

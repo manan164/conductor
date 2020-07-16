@@ -21,7 +21,7 @@ public interface CassandraConfiguration extends Configuration {
     String CASSANDRA_HOST_ADDRESS_DEFAULT_VALUE = "127.0.0.1";
 
     String CASSANDRA_PORT_PROPERTY_NAME = "workflow.cassandra.port";
-    int CASSANDRA_PORT_DEFAULT_VALUE = 9142;
+    int CASSANDRA_PORT_DEFAULT_VALUE = 9042;
 
     String CASSANDRA_CLUSTER_PROPERTY_NAME = "workflow.cassandra.cluster";
     String CASSANDRA_CLUSTER_DEFAULT_VALUE = "";

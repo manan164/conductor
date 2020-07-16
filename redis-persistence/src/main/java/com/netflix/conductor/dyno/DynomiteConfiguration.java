@@ -39,7 +39,7 @@ public interface DynomiteConfiguration extends Configuration {
     }
 
     default String getClusterName() {
-        return getProperty(CLUSTER_NAME_PROPERTY_NAME, "");
+        return getProperty(CLUSTER_NAME_PROPERTY_NAME, "mymaster");
     }
 
     default String getHosts() {

@@ -51,7 +51,7 @@ public class Main {
         Injector bootstrapInjector = Guice.createInjector(new BootstrapModule());
         ModulesProvider modulesProvider = bootstrapInjector.getInstance(ModulesProvider.class);
         Injector serverInjector = Guice.createInjector(modulesProvider.get());
-
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
         Optional<EmbeddedElasticSearch> embeddedSearchInstance = serverInjector.getInstance(EmbeddedElasticSearchProvider.class).get();
         if (embeddedSearchInstance.isPresent()) {
             try {

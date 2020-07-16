@@ -29,7 +29,7 @@ public class RedisWorkflowModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(MetadataDAO.class).to(RedisMetadataDAO.class);
-        bind(ExecutionDAO.class).to(RedisExecutionDAO.class);
+//        bind(ExecutionDAO.class).to(RedisExecutionDAO.class);
         bind(RateLimitingDao.class).to(RedisRateLimitingDao.class);
         bind(QueueDAO.class).to(DynoQueueDAO.class);
 

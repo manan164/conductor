@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.netflix.conductor.core.config.Configuration.DB.CASSANDRA;
 import static java.util.Collections.singletonList;
 
 // TODO Investigate whether this should really be a ThrowingProvider.
@@ -94,7 +95,7 @@ public class ModulesProvider implements Provider<List<AbstractModule>> {
             throw new ProvisionException(message, ie);
         }
 
-        switch (database) {
+        switch (CASSANDRA) {
             case REDIS:
             case DYNOMITE:
                 modules.add(new DynomiteClusterModule());

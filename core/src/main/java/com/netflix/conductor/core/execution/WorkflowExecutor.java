@@ -903,8 +903,8 @@ public class WorkflowExecutor {
         if (task.getStatus().isTerminal()) {
             long duration = getTaskDuration(0, task);
             long lastDuration = task.getEndTime() - task.getStartTime();
-            Monitors.recordTaskExecutionTime(task.getTaskDefName(), duration, true, task.getStatus());
-            Monitors.recordTaskExecutionTime(task.getTaskDefName(), lastDuration, false, task.getStatus());
+            Monitors.recordTaskExecutionTime(task.getTaskDefName(), duration, true, task.getStatus(), task.getWorkflowType());
+            Monitors.recordTaskExecutionTime(task.getTaskDefName(), lastDuration, false, task.getStatus(), task.getWorkflowType());
         }
     }
 

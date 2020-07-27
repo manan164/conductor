@@ -41,34 +41,27 @@ public class ArchiveWorkflowViaReminderStatusListener implements WorkflowStatusL
     @Override
     public void onWorkflowCompleted(Workflow workflow) {
         LOG.debug("Workflow {} is completed", workflow.getWorkflowId());
-        archiveWorkflow(workflow);
+        archiveWorkflow(workflow.getWorkflowId());
     }
 
     @Override
     public void onWorkflowTerminated(Workflow workflow) {
         LOG.debug("Workflow {} is terminated", workflow.getWorkflowId());
-        archiveWorkflow(workflow);
+        archiveWorkflow(workflow.getWorkflowId());
     }
 
-    public void archiveWorkflow(Workflow workflow) {
+    public void archiveWorkflow(String workflowId) {
         Endpoint endpoint = new Endpoint(
                 configuration.getProperty("flo.host","flo-server.swiggy.prod"),
                 configuration.getProperty("flo.uri", "/api"),
-                configuration.getProperty("flo.resource_id", "/workflow/" + workflow.getWorkflowId() + "/remove"));
+                configuration.getProperty("flo.resource_id", "/workflow/" + workflowId + "/remove"));
         HttpNotification httpNotification = new HttpNotification("HTTP_DELETE", endpoint);
         ReminderPayload reminderPayload = new ReminderPayload(Integer.valueOf(configuration.getProperty("flo.ttl","7200")),
-                "FLO_ARCHIVAL", "FLO_ARCHIVAL", workflow.getWorkflowId(), httpNotification);
+                "FLO_ARCHIVAL", "FLO_ARCHIVAL", workflowId, httpNotification);
         Map<String, List<ReminderPayload>> payload = new HashMap<>();
         payload.put("reminders", Arrays.asList(reminderPayload));
         Call<ResponseBody> retrofitCall = reminderApi.setReminder(payload);
-        RetrofitResponse<ResponseBody> response = ReminderRetrofitUtil.executeCall(retrofitCall, "setReminder");
-        if (response != null && response.getData()!= null) {
-            try {
-                workflow.getOutput().put("archival_reminder_id", response.getData().string());
-            } catch (IOException e) {
-                LOG.error("Unable to set reminder for workflow " + workflow.getWorkflowId());
-            }
-        }
+        ReminderRetrofitUtil.executeCall(retrofitCall, "setReminder");
     }
 
 }

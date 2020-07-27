@@ -663,7 +663,6 @@ public class WorkflowExecutor {
         queueDAO.remove(DECIDER_QUEUE, workflow.getWorkflowId());    //remove from the sweep queue
 
         workflowStatusListener.onWorkflowCompleted(workflow);
-        executionDAOFacade.updateWorkflow(workflow);
         executionLockService.releaseLock(workflow.getWorkflowId());
         executionLockService.deleteLock(workflow.getWorkflowId());
     }
@@ -767,7 +766,6 @@ public class WorkflowExecutor {
             Monitors.recordWorkflowTermination(workflow.getWorkflowName(), workflow.getStatus(), workflow.getOwnerApp());
 
             workflowStatusListener.onWorkflowTerminated(workflow);
-            executionDAOFacade.updateWorkflow(workflow);
 
         } finally {
             executionLockService.releaseLock(workflow.getWorkflowId());
@@ -903,8 +901,8 @@ public class WorkflowExecutor {
         if (task.getStatus().isTerminal()) {
             long duration = getTaskDuration(0, task);
             long lastDuration = task.getEndTime() - task.getStartTime();
-            Monitors.recordTaskExecutionTime(task.getTaskDefName(), duration, true, task.getStatus());
-            Monitors.recordTaskExecutionTime(task.getTaskDefName(), lastDuration, false, task.getStatus());
+            Monitors.recordTaskExecutionTime(task.getTaskDefName(), duration, true, task.getStatus(), task.getWorkflowType());
+            Monitors.recordTaskExecutionTime(task.getTaskDefName(), lastDuration, false, task.getStatus(), task.getWorkflowType());
         }
     }
 

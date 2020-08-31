@@ -4,19 +4,13 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "1.11.86"
+            "locked": "1.11.475"
         },
         "com.amazonaws:aws-java-sdk-sqs": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.796"
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence"
-            ],
-            "locked": "3.6.0"
+            "locked": "1.11.842"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
@@ -81,9 +75,6 @@
             ],
             "locked": "2.2.0"
         },
-        "com.netflix.conductor:conductor-cassandra-persistence": {
-            "project": true
-        },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
@@ -99,18 +90,21 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-jersey",
+                "com.netflix.conductor:conductor-kafka-persistence",
                 "com.netflix.conductor:conductor-redis-lock",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-kafka-persistence"
+            ],
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -123,6 +117,9 @@
             "project": true
         },
         "com.netflix.conductor:conductor-jersey": {
+            "project": true
+        },
+        "com.netflix.conductor:conductor-kafka-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-redis-lock": {
@@ -178,6 +175,18 @@
             ],
             "locked": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.3.0"
+        },
         "com.sun.jersey.contribs.jersey-oauth:oauth-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
@@ -200,9 +209,16 @@
             ],
             "locked": "1.19.1"
         },
+        "com.swiggy.commons:kafka-client-java": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "1.6.11-376"
+        },
         "commons-io:commons-io": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-kafka-persistence"
             ],
             "locked": "2.4"
         },
@@ -235,6 +251,20 @@
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "0.5.0"
+        },
+        "io.prometheus:simpleclient": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
@@ -302,13 +332,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.6"
-        },
-        "org.apache.kafka:kafka-clients": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-contribs"
-            ],
-            "locked": "2.2.0"
+            "locked": "3.9"
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
@@ -395,19 +419,13 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "1.11.86"
+            "locked": "1.11.475"
         },
         "com.amazonaws:aws-java-sdk-sqs": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.796"
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence"
-            ],
-            "locked": "3.6.0"
+            "locked": "1.11.842"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
@@ -472,9 +490,6 @@
             ],
             "locked": "2.2.0"
         },
-        "com.netflix.conductor:conductor-cassandra-persistence": {
-            "project": true
-        },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
@@ -490,18 +505,21 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-jersey",
+                "com.netflix.conductor:conductor-kafka-persistence",
                 "com.netflix.conductor:conductor-redis-lock",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-kafka-persistence"
+            ],
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -514,6 +532,9 @@
             "project": true
         },
         "com.netflix.conductor:conductor-jersey": {
+            "project": true
+        },
+        "com.netflix.conductor:conductor-kafka-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-redis-lock": {
@@ -569,6 +590,18 @@
             ],
             "locked": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.3.0"
+        },
         "com.sun.jersey.contribs.jersey-oauth:oauth-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
@@ -591,9 +624,16 @@
             ],
             "locked": "1.19.1"
         },
+        "com.swiggy.commons:kafka-client-java": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "1.6.11-376"
+        },
         "commons-io:commons-io": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-kafka-persistence"
             ],
             "locked": "2.4"
         },
@@ -626,6 +666,20 @@
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "0.5.0"
+        },
+        "io.prometheus:simpleclient": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
@@ -693,13 +747,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.6"
-        },
-        "org.apache.kafka:kafka-clients": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-contribs"
-            ],
-            "locked": "2.2.0"
+            "locked": "3.9"
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
@@ -786,19 +834,13 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "1.11.86"
+            "locked": "1.11.475"
         },
         "com.amazonaws:aws-java-sdk-sqs": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.796"
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence"
-            ],
-            "locked": "3.6.0"
+            "locked": "1.11.842"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
@@ -863,9 +905,6 @@
             ],
             "locked": "2.2.0"
         },
-        "com.netflix.conductor:conductor-cassandra-persistence": {
-            "project": true
-        },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
@@ -881,18 +920,21 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-jersey",
+                "com.netflix.conductor:conductor-kafka-persistence",
                 "com.netflix.conductor:conductor-redis-lock",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-kafka-persistence"
+            ],
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -905,6 +947,9 @@
             "project": true
         },
         "com.netflix.conductor:conductor-jersey": {
+            "project": true
+        },
+        "com.netflix.conductor:conductor-kafka-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-redis-lock": {
@@ -960,6 +1005,18 @@
             ],
             "locked": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.3.0"
+        },
         "com.sun.jersey.contribs.jersey-oauth:oauth-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
@@ -982,9 +1039,16 @@
             ],
             "locked": "1.19.1"
         },
+        "com.swiggy.commons:kafka-client-java": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "1.6.11-376"
+        },
         "commons-io:commons-io": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-kafka-persistence"
             ],
             "locked": "2.4"
         },
@@ -1017,6 +1081,20 @@
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "0.5.0"
+        },
+        "io.prometheus:simpleclient": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
@@ -1084,13 +1162,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.6"
-        },
-        "org.apache.kafka:kafka-clients": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-contribs"
-            ],
-            "locked": "2.2.0"
+            "locked": "3.9"
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
@@ -1177,19 +1249,13 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "1.11.86"
+            "locked": "1.11.475"
         },
         "com.amazonaws:aws-java-sdk-sqs": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.796"
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence"
-            ],
-            "locked": "3.6.0"
+            "locked": "1.11.842"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
@@ -1254,9 +1320,6 @@
             ],
             "locked": "2.2.0"
         },
-        "com.netflix.conductor:conductor-cassandra-persistence": {
-            "project": true
-        },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
@@ -1272,18 +1335,21 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-jersey",
+                "com.netflix.conductor:conductor-kafka-persistence",
                 "com.netflix.conductor:conductor-redis-lock",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-kafka-persistence"
+            ],
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -1296,6 +1362,9 @@
             "project": true
         },
         "com.netflix.conductor:conductor-jersey": {
+            "project": true
+        },
+        "com.netflix.conductor:conductor-kafka-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-redis-lock": {
@@ -1351,6 +1420,18 @@
             ],
             "locked": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.3.0"
+        },
         "com.sun.jersey.contribs.jersey-oauth:oauth-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
@@ -1373,9 +1454,16 @@
             ],
             "locked": "1.19.1"
         },
+        "com.swiggy.commons:kafka-client-java": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "1.6.11-376"
+        },
         "commons-io:commons-io": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-kafka-persistence"
             ],
             "locked": "2.4"
         },
@@ -1408,6 +1496,20 @@
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "0.5.0"
+        },
+        "io.prometheus:simpleclient": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
@@ -1475,13 +1577,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.6"
-        },
-        "org.apache.kafka:kafka-clients": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-contribs"
-            ],
-            "locked": "2.2.0"
+            "locked": "3.9"
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
@@ -1640,19 +1736,13 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "1.11.86"
+            "locked": "1.11.475"
         },
         "com.amazonaws:aws-java-sdk-sqs": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "1.11.842"
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence"
-            ],
-            "locked": "3.6.0"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
@@ -1717,9 +1807,6 @@
             ],
             "locked": "2.2.0"
         },
-        "com.netflix.conductor:conductor-cassandra-persistence": {
-            "project": true
-        },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
@@ -1735,18 +1822,21 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-jersey",
+                "com.netflix.conductor:conductor-kafka-persistence",
                 "com.netflix.conductor:conductor-redis-lock",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-kafka-persistence"
+            ],
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -1759,6 +1849,9 @@
             "project": true
         },
         "com.netflix.conductor:conductor-jersey": {
+            "project": true
+        },
+        "com.netflix.conductor:conductor-kafka-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-redis-lock": {
@@ -1814,6 +1907,18 @@
             ],
             "locked": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.3.0"
+        },
         "com.sun.jersey.contribs.jersey-oauth:oauth-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
@@ -1836,9 +1941,16 @@
             ],
             "locked": "1.19.1"
         },
+        "com.swiggy.commons:kafka-client-java": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "1.6.11-376"
+        },
         "commons-io:commons-io": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-kafka-persistence"
             ],
             "locked": "2.4"
         },
@@ -1871,6 +1983,20 @@
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "0.5.0"
+        },
+        "io.prometheus:simpleclient": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
@@ -1938,13 +2064,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.6"
-        },
-        "org.apache.kafka:kafka-clients": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-contribs"
-            ],
-            "locked": "2.2.0"
+            "locked": "3.9"
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
@@ -2031,19 +2151,13 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "1.11.86"
+            "locked": "1.11.475"
         },
         "com.amazonaws:aws-java-sdk-sqs": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.796"
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence"
-            ],
-            "locked": "3.6.0"
+            "locked": "1.11.842"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
@@ -2108,9 +2222,6 @@
             ],
             "locked": "2.2.0"
         },
-        "com.netflix.conductor:conductor-cassandra-persistence": {
-            "project": true
-        },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
@@ -2126,18 +2237,21 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-jersey",
+                "com.netflix.conductor:conductor-kafka-persistence",
                 "com.netflix.conductor:conductor-redis-lock",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-kafka-persistence"
+            ],
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -2150,6 +2264,9 @@
             "project": true
         },
         "com.netflix.conductor:conductor-jersey": {
+            "project": true
+        },
+        "com.netflix.conductor:conductor-kafka-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-redis-lock": {
@@ -2205,6 +2322,18 @@
             ],
             "locked": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.3.0"
+        },
         "com.sun.jersey.contribs.jersey-oauth:oauth-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
@@ -2227,9 +2356,16 @@
             ],
             "locked": "1.19.1"
         },
+        "com.swiggy.commons:kafka-client-java": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "1.6.11-376"
+        },
         "commons-io:commons-io": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-kafka-persistence"
             ],
             "locked": "2.4"
         },
@@ -2262,6 +2398,20 @@
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "0.5.0"
+        },
+        "io.prometheus:simpleclient": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
@@ -2329,13 +2479,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.6"
-        },
-        "org.apache.kafka:kafka-clients": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-contribs"
-            ],
-            "locked": "2.2.0"
+            "locked": "3.9"
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
@@ -2422,19 +2566,13 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "1.11.86"
+            "locked": "1.11.475"
         },
         "com.amazonaws:aws-java-sdk-sqs": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.796"
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence"
-            ],
-            "locked": "3.6.0"
+            "locked": "1.11.842"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
@@ -2499,9 +2637,6 @@
             ],
             "locked": "2.2.0"
         },
-        "com.netflix.conductor:conductor-cassandra-persistence": {
-            "project": true
-        },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
@@ -2517,18 +2652,21 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-jersey",
+                "com.netflix.conductor:conductor-kafka-persistence",
                 "com.netflix.conductor:conductor-redis-lock",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-kafka-persistence"
+            ],
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -2541,6 +2679,9 @@
             "project": true
         },
         "com.netflix.conductor:conductor-jersey": {
+            "project": true
+        },
+        "com.netflix.conductor:conductor-kafka-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-redis-lock": {
@@ -2596,6 +2737,18 @@
             ],
             "locked": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.3.0"
+        },
         "com.sun.jersey.contribs.jersey-oauth:oauth-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
@@ -2618,9 +2771,16 @@
             ],
             "locked": "1.19.1"
         },
+        "com.swiggy.commons:kafka-client-java": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "1.6.11-376"
+        },
         "commons-io:commons-io": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-kafka-persistence"
             ],
             "locked": "2.4"
         },
@@ -2653,6 +2813,20 @@
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "0.5.0"
+        },
+        "io.prometheus:simpleclient": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
@@ -2720,13 +2894,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.6"
-        },
-        "org.apache.kafka:kafka-clients": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-contribs"
-            ],
-            "locked": "2.2.0"
+            "locked": "3.9"
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
@@ -2813,19 +2981,13 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "1.11.86"
+            "locked": "1.11.475"
         },
         "com.amazonaws:aws-java-sdk-sqs": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.796"
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence"
-            ],
-            "locked": "3.6.0"
+            "locked": "1.11.842"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
@@ -2890,9 +3052,6 @@
             ],
             "locked": "2.2.0"
         },
-        "com.netflix.conductor:conductor-cassandra-persistence": {
-            "project": true
-        },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
@@ -2908,18 +3067,21 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-jersey",
+                "com.netflix.conductor:conductor-kafka-persistence",
                 "com.netflix.conductor:conductor-redis-lock",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-kafka-persistence"
+            ],
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -2932,6 +3094,9 @@
             "project": true
         },
         "com.netflix.conductor:conductor-jersey": {
+            "project": true
+        },
+        "com.netflix.conductor:conductor-kafka-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-redis-lock": {
@@ -2987,6 +3152,18 @@
             ],
             "locked": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.3.0"
+        },
         "com.sun.jersey.contribs.jersey-oauth:oauth-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
@@ -3009,9 +3186,16 @@
             ],
             "locked": "1.19.1"
         },
+        "com.swiggy.commons:kafka-client-java": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "1.6.11-376"
+        },
         "commons-io:commons-io": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-kafka-persistence"
             ],
             "locked": "2.4"
         },
@@ -3044,6 +3228,20 @@
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "0.5.0"
+        },
+        "io.prometheus:simpleclient": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
@@ -3115,13 +3313,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.6"
-        },
-        "org.apache.kafka:kafka-clients": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-contribs"
-            ],
-            "locked": "2.2.0"
+            "locked": "3.9"
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
@@ -3212,19 +3404,13 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "1.11.86"
+            "locked": "1.11.475"
         },
         "com.amazonaws:aws-java-sdk-sqs": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.796"
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence"
-            ],
-            "locked": "3.6.0"
+            "locked": "1.11.842"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
@@ -3289,9 +3475,6 @@
             ],
             "locked": "2.2.0"
         },
-        "com.netflix.conductor:conductor-cassandra-persistence": {
-            "project": true
-        },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
@@ -3307,18 +3490,21 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-jersey",
+                "com.netflix.conductor:conductor-kafka-persistence",
                 "com.netflix.conductor:conductor-redis-lock",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-kafka-persistence"
+            ],
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -3331,6 +3517,9 @@
             "project": true
         },
         "com.netflix.conductor:conductor-jersey": {
+            "project": true
+        },
+        "com.netflix.conductor:conductor-kafka-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-redis-lock": {
@@ -3386,6 +3575,18 @@
             ],
             "locked": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.3.0"
+        },
         "com.sun.jersey.contribs.jersey-oauth:oauth-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
@@ -3408,9 +3609,16 @@
             ],
             "locked": "1.19.1"
         },
+        "com.swiggy.commons:kafka-client-java": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "1.6.11-376"
+        },
         "commons-io:commons-io": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-kafka-persistence"
             ],
             "locked": "2.4"
         },
@@ -3443,6 +3651,20 @@
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "0.5.0"
+        },
+        "io.prometheus:simpleclient": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
@@ -3514,13 +3736,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.6"
-        },
-        "org.apache.kafka:kafka-clients": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-contribs"
-            ],
-            "locked": "2.2.0"
+            "locked": "3.9"
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
@@ -3611,19 +3827,13 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "1.11.86"
+            "locked": "1.11.475"
         },
         "com.amazonaws:aws-java-sdk-sqs": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.796"
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence"
-            ],
-            "locked": "3.6.0"
+            "locked": "1.11.842"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
@@ -3688,9 +3898,6 @@
             ],
             "locked": "2.2.0"
         },
-        "com.netflix.conductor:conductor-cassandra-persistence": {
-            "project": true
-        },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
@@ -3706,18 +3913,21 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-jersey",
+                "com.netflix.conductor:conductor-kafka-persistence",
                 "com.netflix.conductor:conductor-redis-lock",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-kafka-persistence"
+            ],
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -3730,6 +3940,9 @@
             "project": true
         },
         "com.netflix.conductor:conductor-jersey": {
+            "project": true
+        },
+        "com.netflix.conductor:conductor-kafka-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-redis-lock": {
@@ -3785,6 +3998,18 @@
             ],
             "locked": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.3.0"
+        },
         "com.sun.jersey.contribs.jersey-oauth:oauth-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
@@ -3807,9 +4032,16 @@
             ],
             "locked": "1.19.1"
         },
+        "com.swiggy.commons:kafka-client-java": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "1.6.11-376"
+        },
         "commons-io:commons-io": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-kafka-persistence"
             ],
             "locked": "2.4"
         },
@@ -3842,6 +4074,20 @@
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "0.5.0"
+        },
+        "io.prometheus:simpleclient": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
@@ -3913,13 +4159,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.6"
-        },
-        "org.apache.kafka:kafka-clients": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-contribs"
-            ],
-            "locked": "2.2.0"
+            "locked": "3.9"
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
@@ -4010,19 +4250,13 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "1.11.86"
+            "locked": "1.11.475"
         },
         "com.amazonaws:aws-java-sdk-sqs": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
             ],
-            "locked": "1.11.796"
-        },
-        "com.datastax.cassandra:cassandra-driver-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence"
-            ],
-            "locked": "3.6.0"
+            "locked": "1.11.842"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
@@ -4087,9 +4321,6 @@
             ],
             "locked": "2.2.0"
         },
-        "com.netflix.conductor:conductor-cassandra-persistence": {
-            "project": true
-        },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs",
@@ -4105,18 +4336,21 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es5-persistence",
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-server",
                 "com.netflix.conductor:conductor-jersey",
+                "com.netflix.conductor:conductor-kafka-persistence",
                 "com.netflix.conductor:conductor-redis-lock",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
             "project": true
         },
         "com.netflix.conductor:conductor-es5-persistence": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-kafka-persistence"
+            ],
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -4129,6 +4363,9 @@
             "project": true
         },
         "com.netflix.conductor:conductor-jersey": {
+            "project": true
+        },
+        "com.netflix.conductor:conductor-kafka-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-redis-lock": {
@@ -4184,6 +4421,18 @@
             ],
             "locked": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "2.3.0"
+        },
         "com.sun.jersey.contribs.jersey-oauth:oauth-client": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-contribs"
@@ -4206,9 +4455,16 @@
             ],
             "locked": "1.19.1"
         },
+        "com.swiggy.commons:kafka-client-java": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "1.6.11-376"
+        },
         "commons-io:commons-io": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es5-persistence"
+                "com.netflix.conductor:conductor-es5-persistence",
+                "com.netflix.conductor:conductor-kafka-persistence"
             ],
             "locked": "2.4"
         },
@@ -4241,6 +4497,20 @@
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "0.5.0"
+        },
+        "io.prometheus:simpleclient": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-core"
+            ],
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
@@ -4312,13 +4582,7 @@
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "3.6"
-        },
-        "org.apache.kafka:kafka-clients": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-contribs"
-            ],
-            "locked": "2.2.0"
+            "locked": "3.9"
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [

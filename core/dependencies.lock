@@ -1,7 +1,7 @@
 {
     "compile": {
         "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
+            "locked": "1.11.475",
             "requested": "1.11.86"
         },
         "com.fasterxml.jackson.core:jackson-core": {
@@ -63,6 +63,26 @@
             "locked": "0.3.1",
             "requested": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "locked": "2.0.1",
+            "requested": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "locked": "2.3.0",
+            "requested": "2.1.0"
+        },
+        "com.swiggy.commons:kafka-client-java": {
+            "locked": "1.6.11-376",
+            "requested": "1.6.11-376"
+        },
+        "io.prometheus:simpleclient": {
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "locked": "0.6.0",
+            "requested": "0.6.0"
+        },
         "io.reactivex:rxjava": {
             "locked": "1.2.2",
             "requested": "1.2.2"
@@ -91,7 +111,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "3.0",
+            "locked": "3.9",
             "requested": "3.0"
         },
         "org.glassfish:javax.el": {
@@ -105,12 +125,12 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "1.7.25"
+            "locked": "1.7.28"
         }
     },
     "compileClasspath": {
         "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
+            "locked": "1.11.475",
             "requested": "1.11.86"
         },
         "com.fasterxml.jackson.core:jackson-core": {
@@ -172,6 +192,26 @@
             "locked": "0.3.1",
             "requested": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "locked": "2.0.1",
+            "requested": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "locked": "2.3.0",
+            "requested": "2.1.0"
+        },
+        "com.swiggy.commons:kafka-client-java": {
+            "locked": "1.6.11-376",
+            "requested": "1.6.11-376"
+        },
+        "io.prometheus:simpleclient": {
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "locked": "0.6.0",
+            "requested": "0.6.0"
+        },
         "io.reactivex:rxjava": {
             "locked": "1.2.2",
             "requested": "1.2.2"
@@ -200,7 +240,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "3.0",
+            "locked": "3.9",
             "requested": "3.0"
         },
         "org.glassfish:javax.el": {
@@ -214,12 +254,12 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "1.7.25"
+            "locked": "1.7.28"
         }
     },
     "default": {
         "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
+            "locked": "1.11.475",
             "requested": "1.11.86"
         },
         "com.fasterxml.jackson.core:jackson-core": {
@@ -281,6 +321,26 @@
             "locked": "0.3.1",
             "requested": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "locked": "2.0.1",
+            "requested": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "locked": "2.3.0",
+            "requested": "2.1.0"
+        },
+        "com.swiggy.commons:kafka-client-java": {
+            "locked": "1.6.11-376",
+            "requested": "1.6.11-376"
+        },
+        "io.prometheus:simpleclient": {
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "locked": "0.6.0",
+            "requested": "0.6.0"
+        },
         "io.reactivex:rxjava": {
             "locked": "1.2.2",
             "requested": "1.2.2"
@@ -309,7 +369,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "3.0",
+            "locked": "3.9",
             "requested": "3.0"
         },
         "org.glassfish:javax.el": {
@@ -323,7 +383,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "1.7.25"
+            "locked": "1.7.28"
         }
     },
     "jacocoAgent": {
@@ -340,7 +400,7 @@
     },
     "runtime": {
         "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
+            "locked": "1.11.475",
             "requested": "1.11.86"
         },
         "com.fasterxml.jackson.core:jackson-core": {
@@ -402,6 +462,26 @@
             "locked": "0.3.1",
             "requested": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "locked": "2.0.1",
+            "requested": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "locked": "2.3.0",
+            "requested": "2.1.0"
+        },
+        "com.swiggy.commons:kafka-client-java": {
+            "locked": "1.6.11-376",
+            "requested": "1.6.11-376"
+        },
+        "io.prometheus:simpleclient": {
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "locked": "0.6.0",
+            "requested": "0.6.0"
+        },
         "io.reactivex:rxjava": {
             "locked": "1.2.2",
             "requested": "1.2.2"
@@ -430,7 +510,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "3.0",
+            "locked": "3.9",
             "requested": "3.0"
         },
         "org.glassfish:javax.el": {
@@ -444,12 +524,12 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "1.7.25"
+            "locked": "1.7.28"
         }
     },
     "runtimeClasspath": {
         "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
+            "locked": "1.11.475",
             "requested": "1.11.86"
         },
         "com.fasterxml.jackson.core:jackson-core": {
@@ -510,6 +590,26 @@
         "com.spotify:completable-futures": {
             "locked": "0.3.1",
             "requested": "0.3.1"
+        },
+        "com.squareup.retrofit2:converter-jackson": {
+            "locked": "2.0.1",
+            "requested": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "locked": "2.3.0",
+            "requested": "2.1.0"
+        },
+        "com.swiggy.commons:kafka-client-java": {
+            "locked": "1.6.11-376",
+            "requested": "1.6.11-376"
+        },
+        "io.prometheus:simpleclient": {
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "locked": "1.2.2",
@@ -539,7 +639,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "3.0",
+            "locked": "3.9",
             "requested": "3.0"
         },
         "org.glassfish:javax.el": {
@@ -553,12 +653,12 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "1.7.25"
+            "locked": "1.7.28"
         }
     },
     "testCompile": {
         "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
+            "locked": "1.11.475",
             "requested": "1.11.86"
         },
         "com.fasterxml.jackson.core:jackson-core": {
@@ -619,6 +719,26 @@
         "com.spotify:completable-futures": {
             "locked": "0.3.1",
             "requested": "0.3.1"
+        },
+        "com.squareup.retrofit2:converter-jackson": {
+            "locked": "2.0.1",
+            "requested": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "locked": "2.3.0",
+            "requested": "2.1.0"
+        },
+        "com.swiggy.commons:kafka-client-java": {
+            "locked": "1.6.11-376",
+            "requested": "1.6.11-376"
+        },
+        "io.prometheus:simpleclient": {
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "locked": "0.6.0",
+            "requested": "0.6.0"
         },
         "io.reactivex:rxjava": {
             "locked": "1.2.2",
@@ -652,7 +772,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "3.0",
+            "locked": "3.9",
             "requested": "3.0"
         },
         "org.glassfish:javax.el": {
@@ -679,7 +799,7 @@
     },
     "testCompileClasspath": {
         "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
+            "locked": "1.11.475",
             "requested": "1.11.86"
         },
         "com.fasterxml.jackson.core:jackson-core": {
@@ -741,6 +861,26 @@
             "locked": "0.3.1",
             "requested": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "locked": "2.0.1",
+            "requested": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "locked": "2.3.0",
+            "requested": "2.1.0"
+        },
+        "com.swiggy.commons:kafka-client-java": {
+            "locked": "1.6.11-376",
+            "requested": "1.6.11-376"
+        },
+        "io.prometheus:simpleclient": {
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "locked": "0.6.0",
+            "requested": "0.6.0"
+        },
         "io.reactivex:rxjava": {
             "locked": "1.2.2",
             "requested": "1.2.2"
@@ -773,7 +913,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "3.0",
+            "locked": "3.9",
             "requested": "3.0"
         },
         "org.glassfish:javax.el": {
@@ -800,7 +940,7 @@
     },
     "testRuntime": {
         "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
+            "locked": "1.11.475",
             "requested": "1.11.86"
         },
         "com.fasterxml.jackson.core:jackson-core": {
@@ -862,6 +1002,26 @@
             "locked": "0.3.1",
             "requested": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "locked": "2.0.1",
+            "requested": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "locked": "2.3.0",
+            "requested": "2.1.0"
+        },
+        "com.swiggy.commons:kafka-client-java": {
+            "locked": "1.6.11-376",
+            "requested": "1.6.11-376"
+        },
+        "io.prometheus:simpleclient": {
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "locked": "0.6.0",
+            "requested": "0.6.0"
+        },
         "io.reactivex:rxjava": {
             "locked": "1.2.2",
             "requested": "1.2.2"
@@ -894,7 +1054,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "3.0",
+            "locked": "3.9",
             "requested": "3.0"
         },
         "org.glassfish:javax.el": {
@@ -921,7 +1081,7 @@
     },
     "testRuntimeClasspath": {
         "com.amazonaws:aws-java-sdk-s3": {
-            "locked": "1.11.86",
+            "locked": "1.11.475",
             "requested": "1.11.86"
         },
         "com.fasterxml.jackson.core:jackson-core": {
@@ -983,6 +1143,26 @@
             "locked": "0.3.1",
             "requested": "0.3.1"
         },
+        "com.squareup.retrofit2:converter-jackson": {
+            "locked": "2.0.1",
+            "requested": "2.0.1"
+        },
+        "com.squareup.retrofit2:retrofit": {
+            "locked": "2.3.0",
+            "requested": "2.1.0"
+        },
+        "com.swiggy.commons:kafka-client-java": {
+            "locked": "1.6.11-376",
+            "requested": "1.6.11-376"
+        },
+        "io.prometheus:simpleclient": {
+            "locked": "0.8.0",
+            "requested": "0.6.0"
+        },
+        "io.prometheus:simpleclient_servlet": {
+            "locked": "0.6.0",
+            "requested": "0.6.0"
+        },
         "io.reactivex:rxjava": {
             "locked": "1.2.2",
             "requested": "1.2.2"
@@ -1015,7 +1195,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "3.0",
+            "locked": "3.9",
             "requested": "3.0"
         },
         "org.glassfish:javax.el": {

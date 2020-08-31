@@ -90,7 +90,7 @@ public class Monitors {
 		getGauge(className, name, additionalTags).set(measurement);
 	}
 
-	private static Timer getTimer(String className, String name, String... additionalTags) {
+	public static Timer getTimer(String className, String name, String... additionalTags) {
 		Map<String, String> tags = toMap(className, additionalTags);
 		return timers.computeIfAbsent(name, s -> new ConcurrentHashMap<>()).computeIfAbsent(tags, t -> {
 			Id id = registry.createId(name, tags);
@@ -154,8 +154,8 @@ public class Monitors {
 		getTimer(classQualifier, "task_queue_wait", "taskType", taskType).record(queueWaitTime, TimeUnit.MILLISECONDS);
 	}
 
-	public static void recordTaskExecutionTime(String taskType, long duration, boolean includesRetries, Task.Status status) {
-		getTimer(classQualifier, "task_execution", "taskType", taskType, "includeRetries", "" + includesRetries, "status", status.name()).record(duration, TimeUnit.MILLISECONDS);
+	public static void recordTaskExecutionTime(String taskType, long duration, boolean includesRetries, Task.Status status, String workflowName) {
+		getTimer(classQualifier, "task_execution", "taskType", taskType, "includeRetries", "" + includesRetries, "status", status.name(), "workflowName", workflowName).record(duration, TimeUnit.MILLISECONDS);
 	}
 
 	public static void recordTaskPollError(String taskType, String domain, String exception) {
@@ -309,6 +309,7 @@ public class Monitors {
 	public static void recordArchivalDelayQueueSize(int val) {
 		gauge(classQualifier, "workflow_archival_delay_queue_size", val);
 	}
+
 	public static void recordDiscardedArchivalCount() {
 		counter(classQualifier, "discarded_archival_count");
 	}
@@ -319,5 +320,9 @@ public class Monitors {
 
 	public static void recordEventQueuePollSize(String queueType, int val) {
 		gauge(Monitors.classQualifier, "event_queue_poll", val, "queueType", queueType);
+	}
+
+	public static void recordKafkaPublishError() {
+		getCounter(classQualifier, "kafka_publishing_error", "").increment();
 	}
 }

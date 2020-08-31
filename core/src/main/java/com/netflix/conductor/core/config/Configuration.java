@@ -81,6 +81,8 @@ public interface Configuration {
 
     String ADDITIONAL_MODULES_PROPERTY_NAME = "conductor.additional.modules";
 
+    String KAFKA_INDEX_ENABLE = "workflow.kafka.index.enable";
+    
     String EXECUTION_LOCK_ENABLED_PROPERTY_NAME = "workflow.decider.locking.enabled";
     boolean EXECUTION_LOCK_ENABLED_DEFAULT_VALUE = false;
 
@@ -96,6 +98,7 @@ public interface Configuration {
     String EVENT_EXECUTION_INDEXING_ENABLED_PROPERTY_NAME = "workflow.event.execution.indexing.enabled";
     boolean EVENT_EXECUTION_INDEXING_ENABLED_DEFAULT_VALUE = true;
 
+    String FORCE_WORKFLOW_DELETION = "force.workflow.deletion";
     String TASKEXECLOG_INDEXING_ENABLED_PROPERTY_NAME = "workflow.taskExecLog.indexing.enabled";
     boolean TASKEXECLOG_INDEXING_ENABLED_DEFAULT_VALUE = true;
 
@@ -415,6 +418,13 @@ public interface Configuration {
         return null;
     }
 
+    default boolean getKafkaIndexEnable() {
+        return getBooleanProperty(KAFKA_INDEX_ENABLE, false);
+    }
+
+    default boolean isForceWorkflowDeletionEnabled() {
+        return getBooleanProperty(FORCE_WORKFLOW_DELETION, false);
+    }
 
     /**
      * @param name         Name of the property

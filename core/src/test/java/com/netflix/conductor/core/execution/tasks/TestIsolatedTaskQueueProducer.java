@@ -14,6 +14,7 @@ public class TestIsolatedTaskQueueProducer {
 	@Test
 	public void addTaskQueuesAddsElementToQueue() throws InterruptedException {
 
+		SystemTaskWorkerCoordinator.queue.clear();
 		SystemTaskWorkerCoordinator.taskNameWorkflowTaskMapping.put("HTTP", Mockito.mock(WorkflowSystemTask.class));
 		MetadataService metadataService = Mockito.mock(MetadataService.class);
 		IsolatedTaskQueueProducer isolatedTaskQueueProducer = new IsolatedTaskQueueProducer(metadataService, Mockito.mock(Configuration.class));
@@ -23,8 +24,9 @@ public class TestIsolatedTaskQueueProducer {
 		isolatedTaskQueueProducer.addTaskQueues();
 
 		Assert.assertFalse(SystemTaskWorkerCoordinator.queue.isEmpty());
-
+		Assert.assertTrue(SystemTaskWorkerCoordinator.queue.contains("HTTP-isolated"));
 	}
 
 
 }
+

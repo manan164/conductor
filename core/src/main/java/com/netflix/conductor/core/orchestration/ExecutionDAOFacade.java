@@ -77,10 +77,10 @@ public class ExecutionDAOFacade {
         this.objectMapper = objectMapper;
         this.config = config;
         this.scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(4,
-            (runnable, executor) -> {
-            LOGGER.warn("Request {} to delay updating index dropped in executor {}", runnable, executor);
-            Monitors.recordDiscardedIndexingCount("delayQueue");
-        });
+                (runnable, executor) -> {
+                    LOGGER.warn("Request {} to delay updating index dropped in executor {}", runnable, executor);
+                    Monitors.recordDiscardedIndexingCount("delayQueue");
+                });
         this.scheduledThreadPoolExecutor.setRemoveOnCancelPolicy(true);
     }
 
@@ -103,9 +103,8 @@ public class ExecutionDAOFacade {
     }
 
     /**
-     * Fetches the {@link Workflow} object from the data store given the id.
-     * Attempts to fetch from {@link ExecutionDAO} first,
-     * if not found, attempts to fetch from {@link IndexDAO}.
+     * Fetches the {@link Workflow} which are not archived from the ExecutionDAO.
+     * Attempts to fetch from {@link ExecutionDAO},
      *
      * @param workflowId   the id of the workflow to be fetched
      * @param includeTasks if true, fetches the {@link Task} data in the workflow.
@@ -142,7 +141,45 @@ public class ExecutionDAOFacade {
     }
 
     /**
-     * Retrieve all workflow executions with the given correlationId and workflow type
+     * Fetches the {@link Workflow} object from the data store given the id.
+     * Attempts to fetch from {@link ExecutionDAO} first,
+     * if not found, attempts to fetch from {@link IndexDAO}.
+     *
+     * @param workflowId   the id of the workflow to be fetched
+     * @return the {@link Workflow} object
+     * @throws ApplicationException if
+     *                              <ul>
+     *                              <li>no such {@link Workflow} is found</li>
+     *                              <li>parsing the {@link Workflow} object fails</li>
+     *                              </ul>
+     */
+    public Workflow fetchWorkFlow(String workflowId) throws Exception {
+        Workflow workflow;
+        try {
+            workflow = getWorkflowById(workflowId, false);
+            return workflow;
+        } catch(Exception ex) {
+            LOGGER.debug("Workflow {} not found in executionDAO, checking indexDAO", workflowId);
+            String json = indexDAO.get(workflowId, RAW_JSON_FIELD);
+            if (json == null) {
+                String errorMsg = String.format("No such running workflow found by id:  %s", workflowId);
+                LOGGER.error("No such running workflow found by id:  {}", workflowId);
+                throw new Exception(errorMsg);
+            }
+
+            try {
+                workflow = objectMapper.readValue(json, Workflow.class);
+            } catch (IOException e) {
+                String errorMsg = String.format("Error reading workflow: %s", workflowId);
+                LOGGER.error(errorMsg);
+                throw new Exception(errorMsg);
+            }
+        }
+        return workflow;
+    }
+
+    /**
+     * Retrieve all workflow executions with the given correlationId
      * Uses the {@link IndexDAO} to search across workflows if the {@link ExecutionDAO} cannot perform searches across workflows.
      *
      * @param workflowName, workflow type to be queried
@@ -155,18 +192,18 @@ public class ExecutionDAOFacade {
         	String query = "correlationId='" + correlationId + "' AND workflowType='" + workflowName + "'";
             SearchResult<String> result = indexDAO.searchWorkflows(query, "*", 0, 1000, null);
             return result.getResults().stream()
-                .parallel()
-                .map(workflowId -> {
-                    try {
-                        return getWorkflowById(workflowId, includeTasks);
-                    } catch (ApplicationException e) {
-                        // This might happen when the workflow archival failed and the workflow was removed from primary datastore
-                        LOGGER.error("Error getting the workflow: {}  for correlationId: {} from datastore/index", workflowId, correlationId, e);
-                        return null;
-                    }
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                    .parallel()
+                    .map(workflowId -> {
+                        try {
+                            return getWorkflowById(workflowId, includeTasks);
+                        } catch (ApplicationException e) {
+                            // This might happen when the workflow archival failed and the workflow was removed from primary datastore
+                            LOGGER.error("Error getting the workflow: {}  for correlationId: {} from datastore/index", workflowId, correlationId, e);
+                            return null;
+                        }
+                    })
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
         }
         return executionDAO.getWorkflowsByCorrelationId(workflowName,correlationId, includeTasks);
     }
@@ -275,13 +312,14 @@ public class ExecutionDAOFacade {
                         new String[]{RAW_JSON_FIELD, ARCHIVED_FIELD},
                         new Object[]{objectMapper.writeValueAsString(workflow), true});
             } else {
-                throw new ApplicationException(Code.INVALID_INPUT, String.format("Cannot archive workflow: %s with status: %s",
-                        workflow.getWorkflowId(),
-                        workflow.getStatus()));
+                // Not archiving, also remove workflow from index
+                indexDAO.asyncRemoveWorkflow(workflow.getWorkflowId());
             }
         } else {
-            // Not archiving, also remove workflow from index
-            indexDAO.asyncRemoveWorkflow(workflow.getWorkflowId());
+
+            throw new ApplicationException(Code.INVALID_INPUT, String.format("Cannot archive workflow: %s with status: %s",
+                    workflow.getWorkflowId(),
+                    workflow.getStatus()));
         }
     }
 
@@ -298,8 +336,7 @@ public class ExecutionDAOFacade {
                 Monitors.recordDaoError("executionDao", "removeWorkflow");
                 throw ex;
             }
-        } catch (ApplicationException ae) {
-            throw ae;
+
         } catch (Exception e) {
             throw new ApplicationException(ApplicationException.Code.BACKEND_ERROR, "Error removing workflow: " + workflowId, e);
         }
@@ -370,14 +407,10 @@ public class ExecutionDAOFacade {
                 }
             }
             executionDAO.updateTask(task);
-            /*
-             * Indexing a task for every update adds a lot of volume. That is ok but if async indexing
-             * is enabled and tasks are stored in memory until a block has completed, we would lose a lot
-             * of tasks on a system failure. So only index for each update if async indexing is not enabled.
-             * If it *is* enabled, tasks will be indexed only when a workflow is in terminal state.
-             */
-            if (!config.enableAsyncIndexing()) {
-            	indexDAO.indexTask(task);
+            if (config.enableAsyncIndexing()) {
+                indexDAO.asyncIndexTask(task);
+            } else {
+                indexDAO.indexTask(task);
             }
         } catch (Exception e) {
             String errorMsg = String.format("Error updating task: %s in workflow: %s", task.getTaskId(), task.getWorkflowInstanceId());

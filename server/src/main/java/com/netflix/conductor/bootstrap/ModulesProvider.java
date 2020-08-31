@@ -15,9 +15,11 @@ package com.netflix.conductor.bootstrap;
 import com.google.inject.AbstractModule;
 import com.google.inject.ProvisionException;
 import com.google.inject.util.Modules;
-import com.netflix.conductor.cassandra.CassandraModule;
 import com.netflix.conductor.common.utils.ExternalPayloadStorage;
 import com.netflix.conductor.common.utils.JsonMapperProvider;
+import com.netflix.conductor.kafka.index.moduleProvider.KafkaModule;
+import com.netflix.conductor.contribs.confluent_kafka.ConfluentKafkaProducerManager;
+import com.netflix.conductor.contribs.confluent_kafka.ConfluentKafkaPublishTask;
 import com.netflix.conductor.contribs.http.HttpTask;
 import com.netflix.conductor.contribs.http.RestClientManager;
 import com.netflix.conductor.contribs.json.JsonJqTransform;
@@ -34,6 +36,7 @@ import com.netflix.conductor.noopindex.NoopIndexModule;
 import com.netflix.conductor.dao.RedisWorkflowModule;
 import com.netflix.conductor.elasticsearch.ElasticSearchModule;
 import com.netflix.conductor.locking.redis.config.RedisLockModule;
+import com.netflix.conductor.jetty.server.spectator.PrometheusMetricsModule;
 import com.netflix.conductor.server.DynomiteClusterModule;
 import com.netflix.conductor.server.JerseyModule;
 import com.netflix.conductor.server.LocalRedisModule;
@@ -107,10 +110,6 @@ public class ModulesProvider implements Provider<List<AbstractModule>> {
                 modules.add(new RedisWorkflowModule());
                 logger.info("Starting conductor server using redis_cluster.");
                 break;
-            case CASSANDRA:
-                modules.add(new CassandraModule());
-                logger.info("Starting conductor server using cassandra.");
-                break;
             case REDIS_SENTINEL:
                 modules.add(new RedisSentinelModule());
                 modules.add(new RedisWorkflowModule());
@@ -122,6 +121,8 @@ public class ModulesProvider implements Provider<List<AbstractModule>> {
             modules.add(new ElasticSearchModule());
         else
             modules.add(new NoopIndexModule());
+
+        modules.add(new KafkaModule());
 
         modules.add(new WorkflowExecutorModule());
 
@@ -184,9 +185,10 @@ public class ModulesProvider implements Provider<List<AbstractModule>> {
 
         new HttpTask(new RestClientManager(configuration), configuration, new JsonMapperProvider().get());
         new KafkaPublishTask(configuration, new KafkaProducerManager(configuration), new JsonMapperProvider().get());
+        new ConfluentKafkaPublishTask(configuration, new ConfluentKafkaProducerManager(configuration), new JsonMapperProvider().get());
         new JsonJqTransform(new JsonMapperProvider().get());
         modules.add(new ServerModule());
-
+        modules.add(new PrometheusMetricsModule());
         return modules;
     }
 }

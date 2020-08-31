@@ -22,6 +22,7 @@ import com.netflix.conductor.dao.dynomite.queue.DynoQueueDAO;
 import com.netflix.conductor.dyno.DynoProxy;
 import com.netflix.conductor.dyno.RedisQueuesProvider;
 import com.netflix.conductor.dyno.RedisQueuesShardingStrategyProvider;
+import com.netflix.conductor.service.WorkflowMonitor;
 import com.netflix.dyno.queues.redis.RedisQueues;
 import com.netflix.dyno.queues.redis.sharding.ShardingStrategy;
 
@@ -42,5 +43,6 @@ public class RedisWorkflowModule extends AbstractModule {
         bind(ShardingStrategy.class).toProvider(RedisQueuesShardingStrategyProvider.class).asEagerSingleton();
         bind(RedisQueues.class).toProvider(RedisQueuesProvider.class).asEagerSingleton();
         bind(DynoProxy.class).asEagerSingleton();
+        bind(WorkflowMonitor.class).asEagerSingleton();
     }
 }

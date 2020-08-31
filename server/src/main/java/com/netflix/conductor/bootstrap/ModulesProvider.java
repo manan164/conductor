@@ -34,7 +34,6 @@ import com.netflix.conductor.noopindex.NoopIndexModule;
 import com.netflix.conductor.dao.RedisWorkflowModule;
 import com.netflix.conductor.elasticsearch.ElasticSearchModule;
 import com.netflix.conductor.locking.redis.config.RedisLockModule;
-import com.netflix.conductor.mysql.MySQLWorkflowModule;
 import com.netflix.conductor.server.DynomiteClusterModule;
 import com.netflix.conductor.server.JerseyModule;
 import com.netflix.conductor.server.LocalRedisModule;
@@ -42,8 +41,6 @@ import com.netflix.conductor.server.RedisClusterModule;
 import com.netflix.conductor.server.RedisSentinelModule;
 import com.netflix.conductor.server.ServerModule;
 import com.netflix.conductor.server.SwaggerModule;
-import com.netflix.conductor.zookeeper.config.ZookeeperModule;
-import com.netflix.conductor.postgres.PostgresWorkflowModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,14 +97,6 @@ public class ModulesProvider implements Provider<List<AbstractModule>> {
                 modules.add(new RedisWorkflowModule());
                 logger.info("Starting conductor server using dynomite/redis cluster.");
                 break;
-            case MYSQL:
-                modules.add(new MySQLWorkflowModule());
-                logger.info("Starting conductor server using MySQL data store.");
-                break;
-            case POSTGRES:
-                modules.add(new PostgresWorkflowModule());
-                logger.info("Starting conductor server using Postgres data store.");
-                break;
             case MEMORY:
                 modules.add(new LocalRedisModule());
                 modules.add(new RedisWorkflowModule());
@@ -156,10 +145,6 @@ public class ModulesProvider implements Provider<List<AbstractModule>> {
                 case REDIS:
                     modules.add(new RedisLockModule());
                     logger.info("Starting locking module using Redis cluster.");
-                    break;
-                case ZOOKEEPER:
-                    modules.add(new ZookeeperModule());
-                    logger.info("Starting locking module using Zookeeper cluster.");
                     break;
                 case LOCAL_ONLY:
                     modules.add(new LocalOnlyLockModule());

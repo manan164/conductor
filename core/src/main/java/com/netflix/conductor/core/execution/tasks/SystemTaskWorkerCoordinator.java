@@ -21,6 +21,8 @@ import com.netflix.conductor.core.execution.WorkflowExecutor;
 import com.netflix.conductor.core.utils.QueueUtils;
 import com.netflix.conductor.dao.QueueDAO;
 import com.netflix.conductor.metrics.Monitors;
+
+import java.awt.*;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
@@ -97,7 +99,7 @@ public class SystemTaskWorkerCoordinator {
         LOGGER.info("Started listening for queue: {}", queueName);
     }
 
-    private void pollAndExecute(String queueName) {
+    public void pollAndExecute(String queueName) {
         if (config.disableAsyncWorkers()) {
             LOGGER.warn("System Task Worker is DISABLED.  Not polling for system task in queue : {}", queueName);
             return;

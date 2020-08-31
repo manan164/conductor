@@ -25,7 +25,6 @@ dependencies {
     compile project(':conductor-core')
     compile project(':conductor-jersey')
     compile project(':conductor-redis-persistence')
-    compile project(':conductor-cassandra-persistence')
     compile project(':conductor-contribs')
     compile project(':conductor-es5-persistence')
     compile project(':conductor-kafka-persistence')

@@ -10,7 +10,7 @@ import com.netflix.conductor.service.*;
 public class WorkflowExecutorModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(WorkflowStatusListener.class).to(ArchiveWorkflowViaReminderStatusListener.class);
+        bind(WorkflowStatusListener.class).to(WorkflowStatusListenerStub.class);
         //service layer
         bind(AdminService.class).to(AdminServiceImpl.class);
         bind(WorkflowService.class).to(WorkflowServiceImpl.class);

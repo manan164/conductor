@@ -18,8 +18,8 @@ plugins {
 
 configurations {
     // Prevent shaded dependencies from being published, while keeping them available to tests
-    shadow.extendsFrom compileOnly
-    testRuntime.extendsFrom compileOnly
+//    shadow.extendsFrom compileOnly
+//    testRuntime.extendsFrom compileOnly
 }
 
 ext['elasticsearch.version'] = revElasticSearch7
@@ -39,6 +39,7 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-databind"
     implementation "com.fasterxml.jackson.core:jackson-core"
 
+    implementation "org.elasticsearch.client:transport"
     implementation "org.elasticsearch.client:elasticsearch-rest-client"
     implementation "org.elasticsearch.client:elasticsearch-rest-high-level-client"
 
@@ -48,17 +49,4 @@ dependencies {
     testImplementation project(':conductor-common').sourceSets.test.output
 }
 
-// Drop the classifier and delete jar task actions to replace the regular jar artifact with the shadow artifact
-shadowJar {
-    configurations = [project.configurations.shadow]
-    classifier = null
-
-    // Service files are not included by default.
-    mergeServiceFiles {
-        include 'META-INF/services/*'
-        include 'META-INF/maven/*'
-    }
-}
-
-jar.enabled = false
-jar.dependsOn shadowJar
+jar.enabled = true

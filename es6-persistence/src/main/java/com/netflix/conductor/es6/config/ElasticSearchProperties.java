@@ -36,7 +36,7 @@ public class ElasticSearchProperties {
     private String indexPrefix = "conductor";
 
     /** The color of the elasticserach cluster to wait for to confirm healthy status */
-    private String clusterHealthColor = "green";
+    private String clusterHealthColor = "yellow";
 
     /** The size of the batch to be used for bulk indexing in async mode */
     private int indexBatchSize = 1;

@@ -15,6 +15,7 @@ package com.netflix.conductor.core.reconciliation;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+import com.netflix.conductor.metrics.MetricsCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,17 +43,20 @@ public class WorkflowSweeper {
     private final WorkflowRepairService workflowRepairService;
     private final QueueDAO queueDAO;
 
+    private final MetricsCollector metricsCollector;
+
     private static final String CLASS_NAME = WorkflowSweeper.class.getSimpleName();
 
     @Autowired
-    public WorkflowSweeper(
+    public WorkflowSweeper(MetricsCollector metricsCollector,
             WorkflowExecutor workflowExecutor,
-            Optional<WorkflowRepairService> workflowRepairService,
-            ConductorProperties properties,
-            QueueDAO queueDAO) {
+                           Optional<WorkflowRepairService> workflowRepairService,
+                           ConductorProperties properties,
+                           QueueDAO queueDAO) {
         this.properties = properties;
         this.queueDAO = queueDAO;
         this.workflowExecutor = workflowExecutor;
+        this.metricsCollector = metricsCollector;
         this.workflowRepairService = workflowRepairService.orElse(null);
         LOGGER.info("WorkflowSweeper initialized.");
     }
@@ -74,7 +78,7 @@ public class WorkflowSweeper {
                 workflowRepairService.verifyAndRepairWorkflowTasks(workflowId);
             }
 
-            WorkflowModel workflow = workflowExecutor.decide(workflowId);
+            WorkflowModel workflow = metricsCollector.getTimer("decider").record( ()->workflowExecutor.decide(workflowId));
             if (workflow != null && workflow.getStatus().isTerminal()) {
                 queueDAO.remove(DECIDER_QUEUE, workflowId);
                 return;

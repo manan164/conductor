@@ -12,6 +12,7 @@
  */
 package com.netflix.conductor.core.execution;
 
+import com.netflix.conductor.metrics.MetricsCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,8 @@ import com.netflix.conductor.metrics.Monitors;
 import com.netflix.conductor.model.TaskModel;
 import com.netflix.conductor.model.WorkflowModel;
 
+import java.util.concurrent.TimeUnit;
+
 @Component
 public class AsyncSystemTaskExecutor {
 
@@ -36,18 +39,21 @@ public class AsyncSystemTaskExecutor {
     private final long systemTaskCallbackTime;
     private final WorkflowExecutor workflowExecutor;
 
+    private final MetricsCollector metricsCollector;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AsyncSystemTaskExecutor.class);
 
-    public AsyncSystemTaskExecutor(
+    public AsyncSystemTaskExecutor(MetricsCollector metricsCollector,
             ExecutionDAOFacade executionDAOFacade,
-            QueueDAO queueDAO,
-            MetadataDAO metadataDAO,
-            ConductorProperties conductorProperties,
-            WorkflowExecutor workflowExecutor) {
+                                   QueueDAO queueDAO,
+                                   MetadataDAO metadataDAO,
+                                   ConductorProperties conductorProperties,
+                                   WorkflowExecutor workflowExecutor) {
         this.executionDAOFacade = executionDAOFacade;
         this.queueDAO = queueDAO;
         this.metadataDAO = metadataDAO;
         this.workflowExecutor = workflowExecutor;
+        this.metricsCollector = metricsCollector;
         this.systemTaskCallbackTime =
                 conductorProperties.getSystemTaskWorkerCallbackDuration().getSeconds();
         this.queueTaskMessagePostponeSecs =
@@ -136,6 +142,7 @@ public class AsyncSystemTaskExecutor {
             if (task.getStatus() == TaskModel.Status.SCHEDULED) {
                 task.setStartTime(System.currentTimeMillis());
                 Monitors.recordQueueWaitTime(task.getTaskType(), task.getQueueWaitTime());
+                metricsCollector.getTimer("task_queue_wait_time", task.getTaskDefName()).record(task.getQueueWaitTime(), TimeUnit.MILLISECONDS);
                 systemTask.start(workflow, task, workflowExecutor);
             } else if (task.getStatus() == TaskModel.Status.IN_PROGRESS) {
                 systemTask.execute(workflow, task, workflowExecutor);

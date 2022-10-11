@@ -15,13 +15,17 @@ plugins {
     id 'org.springframework.boot'
 }
 
+repositories {
+    mavenLocal()
+}
+
 dependencies {
 
     implementation project(':conductor-rest')
     implementation project(':conductor-core')
     implementation project(':conductor-redis-persistence')
     implementation project(':conductor-cassandra-persistence')
-    implementation project(':conductor-es6-persistence')
+    implementation 'com.netflix.conductor:conductor-es7-persistence:3.12.0-SNAPSHOT'
     implementation project(':conductor-grpc-server')
     implementation project(':conductor-redis-lock')
     implementation project(':conductor-redis-concurrency-limit')
@@ -34,6 +38,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.retry:spring-retry'
+    implementation "io.micrometer:micrometer-registry-prometheus:1.9.4"
+    implementation 'io.orkes.queues:orkes-conductor-queues:1.0.2'
+
 
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
     implementation 'org.apache.logging.log4j:log4j-web'

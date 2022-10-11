@@ -17,6 +17,8 @@ dependencies {
     compileOnly 'org.springframework.boot:spring-boot-starter'
     compileOnly 'org.springframework.boot:spring-boot-starter-validation'
     compileOnly 'org.springframework.retry:spring-retry'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
 
     implementation "com.fasterxml.jackson.core:jackson-annotations"
     implementation "com.fasterxml.jackson.core:jackson-databind"
@@ -36,6 +38,11 @@ dependencies {
     implementation "io.reactivex:rxjava:${revRxJava}"
 
     implementation "com.netflix.spectator:spectator-api:${revSpectator}"
+
+    implementation "io.micrometer:micrometer-registry-prometheus:1.9.4"
+    implementation "io.micrometer:micrometer-core:1.9.4"
+    implementation "com.netflix.spectator:spectator-reg-micrometer:${revSpectator}"
+    implementation "com.netflix.spectator:spectator-reg-metrics3:${revSpectator}"
 
     implementation "org.apache.bval:bval-jsr:${revBval}"
 

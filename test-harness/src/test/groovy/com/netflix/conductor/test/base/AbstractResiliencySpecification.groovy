@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Primary
 import org.springframework.test.context.TestPropertySource
 
 import com.netflix.conductor.dao.QueueDAO
-import com.netflix.conductor.redis.dao.DynoQueueDAO
+
 import com.netflix.conductor.redis.jedis.JedisMock
 import com.netflix.dyno.connectionpool.Host
 import com.netflix.dyno.queues.ShardSupplier

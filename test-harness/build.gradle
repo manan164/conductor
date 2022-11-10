@@ -11,7 +11,7 @@ dependencies {
     testImplementation project(':conductor-core')
     testImplementation project(':conductor-redis-persistence')
     testImplementation project(':conductor-cassandra-persistence')
-    testImplementation 'com.netflix.conductor:conductor-es7-persistence:3.12.0-SNAPSHOT'
+//    testImplementation 'com.netflix.conductor:conductor-es7-persistence:3.12.0-SNAPSHOT'
     testImplementation project(':conductor-grpc-server')
     testImplementation project(':conductor-client')
     testImplementation project(':conductor-grpc-client')

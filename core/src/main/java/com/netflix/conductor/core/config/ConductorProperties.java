@@ -40,7 +40,7 @@ public class ConductorProperties {
 
     /** The timeout duration to set when a workflow is pushed to the decider queue. */
     @DurationUnit(ChronoUnit.SECONDS)
-    private Duration workflowOffsetTimeout = Duration.ofSeconds(30);
+    private Duration workflowOffsetTimeout = Duration.ofSeconds(1);
 
     /** The number of threads to use to do background sweep on active workflows. */
     private int sweeperThreadCount = Runtime.getRuntime().availableProcessors() * 2;
@@ -92,7 +92,7 @@ public class ConductorProperties {
      * for completion.
      */
     @DurationUnit(ChronoUnit.SECONDS)
-    private Duration systemTaskWorkerCallbackDuration = Duration.ofSeconds(30);
+    private Duration systemTaskWorkerCallbackDuration = Duration.ofSeconds(1);
 
     /**
      * The interval (in milliseconds) at which system task queues will be polled by the system task

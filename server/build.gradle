@@ -25,7 +25,7 @@ dependencies {
     implementation project(':conductor-core')
     implementation project(':conductor-redis-persistence')
     implementation project(':conductor-cassandra-persistence')
-    implementation 'com.netflix.conductor:conductor-es7-persistence:3.12.0-SNAPSHOT'
+//    implementation 'com.netflix.conductor:conductor-es7-persistence:3.12.0-SNAPSHOT'
     implementation project(':conductor-grpc-server')
     implementation project(':conductor-redis-lock')
     implementation project(':conductor-redis-concurrency-limit')
@@ -33,12 +33,16 @@ dependencies {
     implementation project(':conductor-json-jq-task')
     implementation project(':conductor-awss3-storage')
     implementation project(':conductor-awssqs-event-queue')
+    implementation 'com.netflix.conductor:conductor-metrics:3.11.3'
+    implementation 'io.orkes.queues:orkes-conductor-queues:0.0.2-SNAPSHOT'
+    implementation 'com.netflix.conductor:conductor-amqp:3.12.0-SNAPSHOT'
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
 
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.retry:spring-retry'
-    implementation "io.micrometer:micrometer-registry-prometheus:1.9.4"
+    implementation "io.micrometer:micrometer-registry-prometheus:1.7.5"
     implementation 'io.orkes.queues:orkes-conductor-queues:1.0.2'
 
 

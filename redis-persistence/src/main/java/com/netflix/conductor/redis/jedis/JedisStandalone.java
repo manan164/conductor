@@ -52,6 +52,9 @@ public class JedisStandalone implements JedisCommands {
     private <R> R executeInJedis(Function<Jedis, R> function) {
         try (Jedis jedis = jedisPool.getResource()) {
             return function.apply(jedis);
+        } catch (Exception e) {
+            System.out.println("Jedis Exception " +  e.toString());
+            return null;
         }
     }
 

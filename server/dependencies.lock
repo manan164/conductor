@@ -1,7 +1,7 @@
 {
     "annotationProcessor": {
         "org.springframework.boot:spring-boot-configuration-processor": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         }
     },
     "compileClasspath": {
@@ -47,9 +47,6 @@
         "com.netflix.conductor:conductor-rest": {
             "project": true
         },
-        "io.micrometer:micrometer-registry-prometheus": {
-            "locked": "1.7.5"
-        },
         "io.orkes.queues:orkes-conductor-queues": {
             "locked": "1.0.2"
         },
@@ -72,25 +69,25 @@
             "locked": "1.6.12"
         },
         "org.springframework.boot:spring-boot-autoconfigure": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-actuator": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-log4j2": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-validation": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-web": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.retry:spring-retry": {
-            "locked": "1.3.1"
+            "locked": "1.3.3"
         }
     },
     "productionRuntimeClasspath": {
@@ -116,34 +113,34 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.12.5"
+            "locked": "2.13.3"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.12.5"
+            "locked": "2.13.3"
         },
         "com.fasterxml.jackson.core:jackson-databind": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.12.5"
+            "locked": "2.13.3"
         },
         "com.fasterxml.jackson.module:jackson-module-afterburner": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "2.12.5"
+            "locked": "2.13.3"
         },
         "com.github.ben-manes.caffeine:caffeine": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core",
                 "com.netflix.conductor:conductor-json-jq-task"
             ],
-            "locked": "2.9.2"
+            "locked": "2.9.3"
         },
         "com.google.guava:guava": {
             "firstLevelTransitive": [
@@ -164,7 +161,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.5.0"
+            "locked": "2.7.0"
         },
         "com.netflix.conductor:conductor-amqp": {
             "locked": "3.12.0-SNAPSHOT"
@@ -322,19 +319,6 @@
                 "com.netflix.conductor:conductor-grpc"
             ],
             "locked": "1.50.2"
-        },
-        "io.micrometer:micrometer-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-http-task"
-            ],
-            "locked": "1.7.6"
-        },
-        "io.micrometer:micrometer-registry-prometheus": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "1.7.5"
         },
         "io.orkes.queues:orkes-conductor-queues": {
             "locked": "1.0.2"
@@ -540,38 +524,38 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-actuator": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-log4j2": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-validation": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-web": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-rest"
             ],
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.retry:spring-retry": {
-            "locked": "1.3.1"
+            "locked": "1.3.3"
         },
         "redis.clients:jedis": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-redis-concurrency-limit",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
-            "locked": "3.6.3"
+            "locked": "3.8.0"
         }
     },
     "runtimeClasspath": {
@@ -597,34 +581,34 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.12.5"
+            "locked": "2.13.3"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.12.5"
+            "locked": "2.13.3"
         },
         "com.fasterxml.jackson.core:jackson-databind": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.12.5"
+            "locked": "2.13.3"
         },
         "com.fasterxml.jackson.module:jackson-module-afterburner": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "2.12.5"
+            "locked": "2.13.3"
         },
         "com.github.ben-manes.caffeine:caffeine": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core",
                 "com.netflix.conductor:conductor-json-jq-task"
             ],
-            "locked": "2.9.2"
+            "locked": "2.9.3"
         },
         "com.google.guava:guava": {
             "firstLevelTransitive": [
@@ -645,7 +629,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.5.0"
+            "locked": "2.7.0"
         },
         "com.netflix.conductor:conductor-amqp": {
             "locked": "3.12.0-SNAPSHOT"
@@ -803,19 +787,6 @@
                 "com.netflix.conductor:conductor-grpc"
             ],
             "locked": "1.50.2"
-        },
-        "io.micrometer:micrometer-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-http-task"
-            ],
-            "locked": "1.7.6"
-        },
-        "io.micrometer:micrometer-registry-prometheus": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "1.7.5"
         },
         "io.orkes.queues:orkes-conductor-queues": {
             "locked": "1.0.2"
@@ -1021,38 +992,38 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-actuator": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-log4j2": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-validation": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-web": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-rest"
             ],
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.retry:spring-retry": {
-            "locked": "1.3.1"
+            "locked": "1.3.3"
         },
         "redis.clients:jedis": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-redis-concurrency-limit",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
-            "locked": "3.6.3"
+            "locked": "3.8.0"
         }
     },
     "testCompileClasspath": {
@@ -1113,9 +1084,6 @@
         "io.grpc:grpc-testing": {
             "locked": "1.50.2"
         },
-        "io.micrometer:micrometer-registry-prometheus": {
-            "locked": "1.7.5"
-        },
         "io.orkes.queues:orkes-conductor-queues": {
             "locked": "1.0.2"
         },
@@ -1138,34 +1106,34 @@
             "locked": "2.17.1"
         },
         "org.junit.vintage:junit-vintage-engine": {
-            "locked": "5.7.2"
+            "locked": "5.8.2"
         },
         "org.springdoc:springdoc-openapi-ui": {
             "locked": "1.6.12"
         },
         "org.springframework.boot:spring-boot-autoconfigure": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-actuator": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-log4j2": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-test": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-validation": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-web": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.retry:spring-retry": {
-            "locked": "1.3.1"
+            "locked": "1.3.3"
         }
     },
     "testRuntimeClasspath": {
@@ -1191,34 +1159,34 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.12.5"
+            "locked": "2.13.3"
         },
         "com.fasterxml.jackson.core:jackson-core": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.12.5"
+            "locked": "2.13.3"
         },
         "com.fasterxml.jackson.core:jackson-databind": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.12.5"
+            "locked": "2.13.3"
         },
         "com.fasterxml.jackson.module:jackson-module-afterburner": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
             ],
-            "locked": "2.12.5"
+            "locked": "2.13.3"
         },
         "com.github.ben-manes.caffeine:caffeine": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core",
                 "com.netflix.conductor:conductor-json-jq-task"
             ],
-            "locked": "2.9.2"
+            "locked": "2.9.3"
         },
         "com.google.guava:guava": {
             "firstLevelTransitive": [
@@ -1239,7 +1207,7 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.5.0"
+            "locked": "2.7.0"
         },
         "com.netflix.conductor:conductor-amqp": {
             "locked": "3.12.0-SNAPSHOT"
@@ -1400,19 +1368,6 @@
         },
         "io.grpc:grpc-testing": {
             "locked": "1.50.2"
-        },
-        "io.micrometer:micrometer-core": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-core",
-                "com.netflix.conductor:conductor-http-task"
-            ],
-            "locked": "1.7.6"
-        },
-        "io.micrometer:micrometer-registry-prometheus": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-core"
-            ],
-            "locked": "1.7.5"
         },
         "io.orkes.queues:orkes-conductor-queues": {
             "locked": "1.0.2"
@@ -1600,7 +1555,7 @@
             "locked": "2.3.3"
         },
         "org.junit.vintage:junit-vintage-engine": {
-            "locked": "5.7.2"
+            "locked": "5.8.2"
         },
         "org.rarefiedredis.redis:redis-java": {
             "firstLevelTransitive": [
@@ -1624,41 +1579,41 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-actuator": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-log4j2": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-test": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-validation": {
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.boot:spring-boot-starter-web": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-rest"
             ],
-            "locked": "2.5.7"
+            "locked": "2.7.3"
         },
         "org.springframework.retry:spring-retry": {
-            "locked": "1.3.1"
+            "locked": "1.3.3"
         },
         "redis.clients:jedis": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-redis-concurrency-limit",
                 "com.netflix.conductor:conductor-redis-persistence"
             ],
-            "locked": "3.6.3"
+            "locked": "3.8.0"
         }
     }
 }

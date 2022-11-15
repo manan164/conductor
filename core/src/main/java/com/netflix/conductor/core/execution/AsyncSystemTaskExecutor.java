@@ -12,7 +12,6 @@
  */
 package com.netflix.conductor.core.execution;
 
-import com.netflix.conductor.metrics.MetricsCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -39,11 +38,9 @@ public class AsyncSystemTaskExecutor {
     private final long systemTaskCallbackTime;
     private final WorkflowExecutor workflowExecutor;
 
-    private final MetricsCollector metricsCollector;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(AsyncSystemTaskExecutor.class);
 
-    public AsyncSystemTaskExecutor(MetricsCollector metricsCollector,
+    public AsyncSystemTaskExecutor(
             ExecutionDAOFacade executionDAOFacade,
                                    QueueDAO queueDAO,
                                    MetadataDAO metadataDAO,
@@ -53,7 +50,6 @@ public class AsyncSystemTaskExecutor {
         this.queueDAO = queueDAO;
         this.metadataDAO = metadataDAO;
         this.workflowExecutor = workflowExecutor;
-        this.metricsCollector = metricsCollector;
         this.systemTaskCallbackTime =
                 conductorProperties.getSystemTaskWorkerCallbackDuration().getSeconds();
         this.queueTaskMessagePostponeSecs =
@@ -142,7 +138,6 @@ public class AsyncSystemTaskExecutor {
             if (task.getStatus() == TaskModel.Status.SCHEDULED) {
                 task.setStartTime(System.currentTimeMillis());
                 Monitors.recordQueueWaitTime(task.getTaskType(), task.getQueueWaitTime());
-                metricsCollector.getTimer("task_queue_wait_time", task.getTaskDefName()).record(task.getQueueWaitTime(), TimeUnit.MILLISECONDS);
                 systemTask.start(workflow, task, workflowExecutor);
             } else if (task.getStatus() == TaskModel.Status.IN_PROGRESS) {
                 systemTask.execute(workflow, task, workflowExecutor);
@@ -181,7 +176,6 @@ public class AsyncSystemTaskExecutor {
             // if the current task execution has completed, then the workflow needs to be evaluated
             if (hasTaskExecutionCompleted) {
                 workflowExecutor.decide(workflowId);
-                metricsCollector.getTimer("task_execution_time", task.getTaskDefName()).record(task.getEndTime() - task.getStartTime(), TimeUnit.SECONDS);
             }
         }
     }

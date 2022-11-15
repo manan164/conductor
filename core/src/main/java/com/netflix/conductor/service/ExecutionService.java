@@ -12,11 +12,9 @@
  */
 package com.netflix.conductor.service;
 
-import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import com.netflix.conductor.metrics.MetricsCollector;
 import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,13 +63,11 @@ public class ExecutionService {
 
     private final long queueTaskMessagePostponeSecs;
 
-    private final MetricsCollector metricsCollector;
-
     private static final int MAX_POLL_TIMEOUT_MS = 5000;
     private static final int POLL_COUNT_ONE = 1;
     private static final int POLLING_TIMEOUT_IN_MS = 100;
 
-    public ExecutionService(MetricsCollector metricsCollector,
+    public ExecutionService(
             WorkflowExecutor workflowExecutor,
                             ExecutionDAOFacade executionDAOFacade,
                             QueueDAO queueDAO,
@@ -82,7 +77,6 @@ public class ExecutionService {
         this.workflowExecutor = workflowExecutor;
         this.executionDAOFacade = executionDAOFacade;
         this.queueDAO = queueDAO;
-        this.metricsCollector = metricsCollector;
         this.externalPayloadStorage = externalPayloadStorage;
 
         this.queueTaskMessagePostponeSecs =
@@ -178,7 +172,6 @@ public class ExecutionService {
                 taskModel.setStatus(TaskModel.Status.IN_PROGRESS);
                 if (taskModel.getStartTime() == 0) {
                     taskModel.setStartTime(System.currentTimeMillis());
-                    metricsCollector.getTimer("task_queue_wait_time", taskModel.getTaskDefName()).record(taskModel.getQueueWaitTime(), TimeUnit.MILLISECONDS);
                     Monitors.recordQueueWaitTime(
                             taskModel.getTaskDefName(), taskModel.getQueueWaitTime());
                 }

@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import com.netflix.conductor.metrics.MetricsCollector;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
@@ -74,8 +73,6 @@ public class WorkflowExecutor {
     private final IDGenerator idGenerator;
     private final WorkflowStatusListener workflowStatusListener;
     private final SystemTaskRegistry systemTaskRegistry;
-    private final MetricsCollector metricsCollector;
-
     private long activeWorkerLastPollMs;
     private static final String CLASS_NAME = WorkflowExecutor.class.getSimpleName();
     private final ExecutionLockService executionLockService;
@@ -95,7 +92,6 @@ public class WorkflowExecutor {
                             > System.currentTimeMillis() - activeWorkerLastPollMs;
 
     public WorkflowExecutor(
-            MetricsCollector metricsCollector,
             DeciderService deciderService,
             MetadataDAO metadataDAO,
             QueueDAO queueDAO,
@@ -119,7 +115,6 @@ public class WorkflowExecutor {
         this.parametersUtils = parametersUtils;
         this.idGenerator = idGenerator;
         this.systemTaskRegistry = systemTaskRegistry;
-        this.metricsCollector = metricsCollector;
     }
 
     public String startWorkflow(StartWorkflowInput input) {
@@ -206,7 +201,7 @@ public class WorkflowExecutor {
                     workflow.getWorkflowName(),
                     workflow.getWorkflowId());
             executionDAOFacade.populateWorkflowAndTaskPayloadData(workflow);
-            metricsCollector.getTimer("decider").record(()-> decide(workflow));
+            decide(workflow);
         } finally {
             executionLockService.releaseLock(workflow.getWorkflowId());
         }
@@ -656,7 +651,6 @@ public class WorkflowExecutor {
                 workflow.getWorkflowName(),
                 workflow.getEndTime() - workflow.getCreateTime(),
                 workflow.getOwnerApp());
-        metricsCollector.getTimer("workflow_completion_time", workflow.getWorkflowName()).record(workflow.getEndTime() - workflow.getCreateTime(), TimeUnit.MILLISECONDS);
 
         if (workflow.hasParent()) {
             updateParentWorkflowTask(workflow);
@@ -974,7 +968,7 @@ public class WorkflowExecutor {
         if (isLazyEvaluateWorkflow(workflowInstance.getWorkflowDefinition(), task)) {
             expediteLazyWorkflowEvaluation(workflowId);
         } else {
-            metricsCollector.getTimer("decider").record(()->decide(workflowId));
+            decide(workflowId);
         }
     }
 

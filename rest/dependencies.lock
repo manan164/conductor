@@ -30,7 +30,7 @@
             "locked": "2.17.1"
         },
         "org.springdoc:springdoc-openapi-ui": {
-            "locked": "1.6.6"
+            "locked": "1.6.12"
         },
         "org.springframework.boot:spring-boot-starter-web": {
             "locked": "2.3.12.RELEASE"
@@ -191,7 +191,7 @@
             "locked": "2.17.1"
         },
         "org.springdoc:springdoc-openapi-ui": {
-            "locked": "1.6.6"
+            "locked": "1.6.12"
         },
         "org.springframework.boot:spring-boot-starter-web": {
             "locked": "2.3.12.RELEASE"
@@ -223,7 +223,7 @@
             "locked": "2.17.1"
         },
         "org.springdoc:springdoc-openapi-ui": {
-            "locked": "1.6.6"
+            "locked": "1.6.12"
         },
         "org.springframework.boot:spring-boot-starter-log4j2": {
             "locked": "2.3.12.RELEASE"
@@ -390,7 +390,7 @@
             "locked": "2.17.1"
         },
         "org.springdoc:springdoc-openapi-ui": {
-            "locked": "1.6.6"
+            "locked": "1.6.12"
         },
         "org.springframework.boot:spring-boot-starter-log4j2": {
             "locked": "2.3.12.RELEASE"

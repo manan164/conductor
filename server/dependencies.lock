@@ -5,6 +5,9 @@
         }
     },
     "compileClasspath": {
+        "com.netflix.conductor:conductor-amqp": {
+            "project": true
+        },
         "com.netflix.conductor:conductor-cassandra-persistence": {
             "project": true
         },
@@ -15,9 +18,6 @@
             "project": true
         },
         "com.netflix.conductor:conductor-es6-persistence": {
-            "project": true
-        },
-        "com.netflix.conductor:conductor-es7-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-grpc-server": {
@@ -60,12 +60,9 @@
             "locked": "2.17.1"
         },
         "org.springdoc:springdoc-openapi-ui": {
-            "locked": "1.6.6"
+            "locked": "1.6.12"
         },
         "org.springframework.boot:spring-boot-starter": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es7-persistence"
-            ],
             "locked": "2.3.12.RELEASE"
         },
         "org.springframework.boot:spring-boot-starter-actuator": {
@@ -132,13 +129,14 @@
         },
         "com.google.guava:guava": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
                 "com.netflix.conductor:conductor-es6-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
-            "locked": "30.1.1-android"
+            "locked": "31.1-android"
         },
         "com.google.protobuf:protobuf-java": {
             "firstLevelTransitive": [
@@ -146,13 +144,16 @@
                 "com.netflix.conductor:conductor-core",
                 "com.netflix.conductor:conductor-grpc"
             ],
-            "locked": "3.19.2"
+            "locked": "3.21.7"
         },
         "com.jayway.jsonpath:json-path": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "2.4.0"
+        },
+        "com.netflix.conductor:conductor-amqp": {
+            "project": true
         },
         "com.netflix.conductor:conductor-annotations": {
             "firstLevelTransitive": [
@@ -165,6 +166,7 @@
         },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
@@ -184,6 +186,7 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es6-persistence",
@@ -198,9 +201,6 @@
             "project": true
         },
         "com.netflix.conductor:conductor-es6-persistence": {
-            "project": true
-        },
-        "com.netflix.conductor:conductor-es7-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -262,6 +262,7 @@
         },
         "com.rabbitmq:amqp-client": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "5.14.0"
@@ -289,25 +290,25 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc-server"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-protobuf": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-services": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc-server"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-stub": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.micrometer:micrometer-registry-datadog": {
             "locked": "1.5.14"
@@ -332,6 +333,7 @@
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core"
             ],
@@ -382,6 +384,7 @@
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
@@ -402,6 +405,7 @@
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -421,6 +425,7 @@
         },
         "org.apache.logging.log4j:log4j-core": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -440,6 +445,7 @@
         },
         "org.apache.logging.log4j:log4j-jul": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -459,6 +465,7 @@
         },
         "org.apache.logging.log4j:log4j-slf4j-impl": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -478,6 +485,7 @@
         },
         "org.apache.logging.log4j:log4j-web": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -548,12 +556,9 @@
                 "com.netflix.conductor:conductor-postgres-external-storage",
                 "com.netflix.conductor:conductor-rest"
             ],
-            "locked": "1.6.6"
+            "locked": "1.6.12"
         },
         "org.springframework.boot:spring-boot-starter": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es7-persistence"
-            ],
             "locked": "2.3.12.RELEASE"
         },
         "org.springframework.boot:spring-boot-starter-actuator": {
@@ -637,13 +642,14 @@
         },
         "com.google.guava:guava": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
                 "com.netflix.conductor:conductor-es6-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
-            "locked": "30.1.1-android"
+            "locked": "31.1-android"
         },
         "com.google.protobuf:protobuf-java": {
             "firstLevelTransitive": [
@@ -651,13 +657,16 @@
                 "com.netflix.conductor:conductor-core",
                 "com.netflix.conductor:conductor-grpc"
             ],
-            "locked": "3.19.2"
+            "locked": "3.21.7"
         },
         "com.jayway.jsonpath:json-path": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-core"
             ],
             "locked": "2.4.0"
+        },
+        "com.netflix.conductor:conductor-amqp": {
+            "project": true
         },
         "com.netflix.conductor:conductor-annotations": {
             "firstLevelTransitive": [
@@ -670,6 +679,7 @@
         },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
@@ -689,6 +699,7 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es6-persistence",
@@ -703,9 +714,6 @@
             "project": true
         },
         "com.netflix.conductor:conductor-es6-persistence": {
-            "project": true
-        },
-        "com.netflix.conductor:conductor-es7-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -767,6 +775,7 @@
         },
         "com.rabbitmq:amqp-client": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "5.14.0"
@@ -794,25 +803,25 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc-server"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-protobuf": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-services": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc-server"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-stub": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.micrometer:micrometer-registry-datadog": {
             "locked": "1.5.14"
@@ -837,6 +846,7 @@
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core"
             ],
@@ -887,6 +897,7 @@
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
@@ -907,6 +918,7 @@
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -926,6 +938,7 @@
         },
         "org.apache.logging.log4j:log4j-core": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -945,6 +958,7 @@
         },
         "org.apache.logging.log4j:log4j-jul": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -964,6 +978,7 @@
         },
         "org.apache.logging.log4j:log4j-slf4j-impl": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -983,6 +998,7 @@
         },
         "org.apache.logging.log4j:log4j-web": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -1053,12 +1069,9 @@
                 "com.netflix.conductor:conductor-postgres-external-storage",
                 "com.netflix.conductor:conductor-rest"
             ],
-            "locked": "1.6.6"
+            "locked": "1.6.12"
         },
         "org.springframework.boot:spring-boot-starter": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es7-persistence"
-            ],
             "locked": "2.3.12.RELEASE"
         },
         "org.springframework.boot:spring-boot-starter-actuator": {
@@ -1095,6 +1108,9 @@
         "com.google.protobuf:protobuf-java": {
             "locked": "3.13.0"
         },
+        "com.netflix.conductor:conductor-amqp": {
+            "project": true
+        },
         "com.netflix.conductor:conductor-cassandra-persistence": {
             "project": true
         },
@@ -1108,9 +1124,6 @@
             "project": true
         },
         "com.netflix.conductor:conductor-es6-persistence": {
-            "project": true
-        },
-        "com.netflix.conductor:conductor-es7-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-grpc-server": {
@@ -1138,13 +1151,13 @@
             "locked": "5.14.0"
         },
         "io.grpc:grpc-protobuf": {
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-stub": {
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-testing": {
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "org.apache.logging.log4j:log4j-api": {
             "locked": "2.17.1"
@@ -1162,12 +1175,9 @@
             "locked": "2.17.1"
         },
         "org.springdoc:springdoc-openapi-ui": {
-            "locked": "1.6.6"
+            "locked": "1.6.12"
         },
         "org.springframework.boot:spring-boot-starter": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es7-persistence"
-            ],
             "locked": "2.3.12.RELEASE"
         },
         "org.springframework.boot:spring-boot-starter-actuator": {
@@ -1237,13 +1247,14 @@
         },
         "com.google.guava:guava": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
                 "com.netflix.conductor:conductor-es6-persistence",
                 "com.netflix.conductor:conductor-mysql-persistence",
                 "com.netflix.conductor:conductor-postgres-persistence"
             ],
-            "locked": "30.1.1-android"
+            "locked": "31.1-android"
         },
         "com.google.protobuf:protobuf-java": {
             "firstLevelTransitive": [
@@ -1259,6 +1270,9 @@
             ],
             "locked": "2.4.0"
         },
+        "com.netflix.conductor:conductor-amqp": {
+            "project": true
+        },
         "com.netflix.conductor:conductor-annotations": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
@@ -1270,6 +1284,7 @@
         },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
@@ -1289,6 +1304,7 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es6-persistence",
@@ -1303,9 +1319,6 @@
             "project": true
         },
         "com.netflix.conductor:conductor-es6-persistence": {
-            "project": true
-        },
-        "com.netflix.conductor:conductor-es7-persistence": {
             "project": true
         },
         "com.netflix.conductor:conductor-grpc": {
@@ -1367,6 +1380,7 @@
         },
         "com.rabbitmq:amqp-client": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-contribs"
             ],
             "locked": "5.14.0"
@@ -1394,28 +1408,28 @@
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc-server"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-protobuf": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-services": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc-server"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-stub": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-testing": {
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.micrometer:micrometer-registry-datadog": {
             "locked": "1.5.14"
@@ -1440,6 +1454,7 @@
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core"
             ],
@@ -1490,6 +1505,7 @@
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
                 "com.netflix.conductor:conductor-contribs",
@@ -1510,6 +1526,7 @@
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -1529,6 +1546,7 @@
         },
         "org.apache.logging.log4j:log4j-core": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -1548,6 +1566,7 @@
         },
         "org.apache.logging.log4j:log4j-jul": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -1567,6 +1586,7 @@
         },
         "org.apache.logging.log4j:log4j-slf4j-impl": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -1586,6 +1606,7 @@
         },
         "org.apache.logging.log4j:log4j-web": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-common",
@@ -1656,12 +1677,9 @@
                 "com.netflix.conductor:conductor-postgres-external-storage",
                 "com.netflix.conductor:conductor-rest"
             ],
-            "locked": "1.6.6"
+            "locked": "1.6.12"
         },
         "org.springframework.boot:spring-boot-starter": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es7-persistence"
-            ],
             "locked": "2.3.12.RELEASE"
         },
         "org.springframework.boot:spring-boot-starter-actuator": {

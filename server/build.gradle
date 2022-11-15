@@ -15,9 +15,14 @@ plugins {
     id 'org.springframework.boot'
 }
 
+repositories {
+    mavenLocal()
+}
+
 dependencies {
 
     implementation project(':conductor-rest')
+    implementation project(':conductor-amqp')
     implementation project(':conductor-core')
     implementation project(':conductor-contribs')
     implementation project(':conductor-redis-persistence')
@@ -25,7 +30,7 @@ dependencies {
     implementation project(':conductor-postgres-persistence')
     implementation project(':conductor-mysql-persistence')
     implementation project(':conductor-es6-persistence')
-    implementation(project(path: ':conductor-es7-persistence', configuration: 'shadow'))
+//    implementation(project(path: ':conductor-es7-persistence', configuration: 'shadow'))
     implementation project(':conductor-grpc-server')
     implementation project(':conductor-redis-lock')
     implementation project(':conductor-postgres-external-storage')

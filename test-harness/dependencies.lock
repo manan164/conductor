@@ -220,6 +220,7 @@
         },
         "com.google.guava:guava": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-client",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core",
@@ -245,6 +246,12 @@
             ],
             "locked": "2.4.0"
         },
+        "com.netflix.conductor:conductor-amqp": {
+            "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-server"
+            ],
+            "project": true
+        },
         "com.netflix.conductor:conductor-annotations": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-common"
@@ -262,6 +269,7 @@
         },
         "com.netflix.conductor:conductor-common": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-client",
                 "com.netflix.conductor:conductor-contribs",
@@ -286,6 +294,7 @@
         },
         "com.netflix.conductor:conductor-core": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-es6-persistence",
@@ -301,12 +310,6 @@
             "project": true
         },
         "com.netflix.conductor:conductor-es6-persistence": {
-            "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-server"
-            ],
-            "project": true
-        },
-        "com.netflix.conductor:conductor-es7-persistence": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-server"
             ],
@@ -407,6 +410,7 @@
         },
         "com.rabbitmq:amqp-client": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-server"
             ],
@@ -443,27 +447,27 @@
                 "com.netflix.conductor:conductor-grpc-client",
                 "com.netflix.conductor:conductor-grpc-server"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-protobuf": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-client"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-services": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc-server"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.grpc:grpc-stub": {
             "firstLevelTransitive": [
                 "com.netflix.conductor:conductor-grpc",
                 "com.netflix.conductor:conductor-grpc-client"
             ],
-            "locked": "1.44.1"
+            "locked": "1.50.2"
         },
         "io.micrometer:micrometer-registry-datadog": {
             "firstLevelTransitive": [
@@ -491,6 +495,7 @@
         },
         "io.reactivex:rxjava": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-contribs",
                 "com.netflix.conductor:conductor-core"
             ],
@@ -541,6 +546,7 @@
         },
         "org.apache.commons:commons-lang3": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-client",
                 "com.netflix.conductor:conductor-common",
@@ -563,6 +569,7 @@
         },
         "org.apache.logging.log4j:log4j-api": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-client",
@@ -585,6 +592,7 @@
         },
         "org.apache.logging.log4j:log4j-core": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-client",
@@ -607,6 +615,7 @@
         },
         "org.apache.logging.log4j:log4j-jul": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-client",
@@ -629,6 +638,7 @@
         },
         "org.apache.logging.log4j:log4j-slf4j-impl": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-client",
@@ -651,6 +661,7 @@
         },
         "org.apache.logging.log4j:log4j-web": {
             "firstLevelTransitive": [
+                "com.netflix.conductor:conductor-amqp",
                 "com.netflix.conductor:conductor-annotations",
                 "com.netflix.conductor:conductor-cassandra-persistence",
                 "com.netflix.conductor:conductor-client",
@@ -744,11 +755,10 @@
                 "com.netflix.conductor:conductor-rest",
                 "com.netflix.conductor:conductor-server"
             ],
-            "locked": "1.6.6"
+            "locked": "1.6.12"
         },
         "org.springframework.boot:spring-boot-starter": {
             "firstLevelTransitive": [
-                "com.netflix.conductor:conductor-es7-persistence",
                 "com.netflix.conductor:conductor-server"
             ],
             "locked": "2.3.12.RELEASE"

@@ -181,6 +181,7 @@ public class AsyncSystemTaskExecutor {
             // if the current task execution has completed, then the workflow needs to be evaluated
             if (hasTaskExecutionCompleted) {
                 workflowExecutor.decide(workflowId);
+                metricsCollector.getTimer("task_execution_time", task.getTaskDefName()).record(task.getEndTime() - task.getStartTime(), TimeUnit.SECONDS);
             }
         }
     }

@@ -111,7 +111,11 @@ public class SystemTaskWorker extends LifecycleAwareComponent {
             List<String> polledTaskIds = queueDAO.pop(queueName, messagesToAcquire, 200);
 
             Monitors.recordTaskPoll(queueName);
-            LOGGER.debug("Polling queue:{}, got {} tasks", queueName, polledTaskIds.size());
+            if (queueName == "HTTP") {
+                LOGGER.debug("Polling queue for slots {}, got {} tasks and queue name {}  queue size {}",
+                        messagesToAcquire, polledTaskIds.size(), queueName, queueDAO.getSize(queueName));
+                Monitors.recordCounter("wasted_slots", messagesToAcquire - polledTaskIds.size(), queueName);
+            }
 
             if (polledTaskIds.size() > 0) {
                 // Immediately release unused slots when number of messages acquired is less than

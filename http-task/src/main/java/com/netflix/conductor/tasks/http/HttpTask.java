@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.netflix.conductor.metrics.MetricsCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,16 +61,19 @@ public class HttpTask extends WorkflowSystemTask {
     protected RestTemplateProvider restTemplateProvider;
     private final String requestParameter;
 
+    private final MetricsCollector metricsCollector;
+
     @Autowired
-    public HttpTask(RestTemplateProvider restTemplateProvider, ObjectMapper objectMapper) {
-        this(TASK_TYPE_HTTP, restTemplateProvider, objectMapper);
+    public HttpTask(MetricsCollector metricsCollector, RestTemplateProvider restTemplateProvider, ObjectMapper objectMapper) {
+        this(TASK_TYPE_HTTP, restTemplateProvider, objectMapper, metricsCollector);
     }
 
     public HttpTask(
-            String name, RestTemplateProvider restTemplateProvider, ObjectMapper objectMapper) {
+            String name, RestTemplateProvider restTemplateProvider, ObjectMapper objectMapper, MetricsCollector metricsCollector) {
         super(name);
         this.restTemplateProvider = restTemplateProvider;
         this.objectMapper = objectMapper;
+        this.metricsCollector = metricsCollector;
         this.requestParameter = REQUEST_PARAMETER_NAME;
         LOGGER.info("{} initialized...", getTaskType());
     }
@@ -101,7 +105,13 @@ public class HttpTask extends WorkflowSystemTask {
         }
 
         try {
-            HttpResponse response = httpCall(input);
+            HttpResponse response = metricsCollector.getTimer("http_call").record(() -> {
+                try {
+                    return httpCall(input);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
             LOGGER.debug(
                     "Response: {}, {}, task:{}",
                     response.statusCode,

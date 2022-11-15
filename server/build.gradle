@@ -25,6 +25,7 @@ dependencies {
     implementation project(':conductor-core')
     implementation project(':conductor-redis-persistence')
     implementation project(':conductor-cassandra-persistence')
+    implementation project(':conductor-es6-persistence')
 //    implementation 'com.netflix.conductor:conductor-es7-persistence:3.12.0-SNAPSHOT'
     implementation project(':conductor-grpc-server')
     implementation project(':conductor-redis-lock')
@@ -34,7 +35,6 @@ dependencies {
     implementation project(':conductor-awss3-storage')
     implementation project(':conductor-awssqs-event-queue')
     implementation 'com.netflix.conductor:conductor-metrics:3.11.3'
-    implementation 'io.orkes.queues:orkes-conductor-queues:0.0.2-SNAPSHOT'
     implementation 'com.netflix.conductor:conductor-amqp:3.12.0-SNAPSHOT'
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
 

@@ -109,7 +109,12 @@ public class HttpTask extends WorkflowSystemTask {
                     task.getTaskId());
             if (response.statusCode > 199 && response.statusCode < 300) {
                 if (isAsyncComplete(task)) {
-                    task.setStatus(TaskModel.Status.IN_PROGRESS);
+                    // Fetch the task again from DAO in case it is updated before the http invocation completes.
+                    // Update the task status only if it is still in SCHEDULED state.
+                    TaskModel updatedTask = executor.getTask(task.getTaskId());
+                    if (!task.getStatus().equals(updatedTask.getStatus())) {
+                        task.setStatus(TaskModel.Status.IN_PROGRESS);
+                    }
                 } else {
                     task.setStatus(TaskModel.Status.COMPLETED);
                 }

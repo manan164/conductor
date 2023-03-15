@@ -102,21 +102,27 @@ public class WorkflowDef extends Auditable {
     private Map<String, Object> inputTemplate = new HashMap<>();
 
     /*
-        State variables map. example
-            {
-            "orderStatus": "${order_update.output.status}",
-            "city" : "Bangalore"
-            }
- */
+           Business State Schema
+               {
+               "DB_TYPE" : "POSTGRESQL|MONGODB",
+               "DB_NAME" : "Audit",
+               "Schema" :
+                   {
+                       "orderStatus": "Audit.order_status",
+                       "city" : "Audit.order_city",
+                       "customerId" : "Audit.customer_id"
+                   }
+               }
+    */
     @ProtoField(id = 16)
-    private Map<String, Object> stateVariables = new HashMap<>();
+    private Map<String, Object> businessStateSchema = new HashMap<>();
 
-    public Map<String, Object> getStateVariables() {
-        return stateVariables;
+    public Map<String, Object> getBusinessStateSchema() {
+        return businessStateSchema;
     }
 
-    public void setStateVariables(Map<String, Object> stateVariables) {
-        this.stateVariables = stateVariables;
+    public void setBusinessStateSchema(Map<String, Object> businessStateSchema) {
+        this.businessStateSchema = businessStateSchema;
     }
 
     /**

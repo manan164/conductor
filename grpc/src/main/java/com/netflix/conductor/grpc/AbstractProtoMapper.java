@@ -16,6 +16,7 @@ import com.netflix.conductor.common.metadata.workflow.SkipTaskRequest;
 import com.netflix.conductor.common.metadata.workflow.StartWorkflowRequest;
 import com.netflix.conductor.common.metadata.workflow.SubWorkflowParams;
 import com.netflix.conductor.common.metadata.workflow.WorkflowDef;
+import com.netflix.conductor.common.metadata.workflow.WorkflowDefSummary;
 import com.netflix.conductor.common.metadata.workflow.WorkflowTask;
 import com.netflix.conductor.common.run.TaskSummary;
 import com.netflix.conductor.common.run.Workflow;
@@ -35,6 +36,7 @@ import com.netflix.conductor.proto.TaskPb;
 import com.netflix.conductor.proto.TaskResultPb;
 import com.netflix.conductor.proto.TaskSummaryPb;
 import com.netflix.conductor.proto.WorkflowDefPb;
+import com.netflix.conductor.proto.WorkflowDefSummaryPb;
 import com.netflix.conductor.proto.WorkflowPb;
 import com.netflix.conductor.proto.WorkflowSummaryPb;
 import com.netflix.conductor.proto.WorkflowTaskPb;
@@ -1000,6 +1002,9 @@ public abstract class AbstractProtoMapper {
             to.setExternalOutputPayloadStoragePath( from.getExternalOutputPayloadStoragePath() );
         }
         to.setWorkflowPriority( from.getWorkflowPriority() );
+        if (from.getDomain() != null) {
+            to.setDomain( from.getDomain() );
+        }
         return to.build();
     }
 
@@ -1024,6 +1029,7 @@ public abstract class AbstractProtoMapper {
         to.setExternalInputPayloadStoragePath( from.getExternalInputPayloadStoragePath() );
         to.setExternalOutputPayloadStoragePath( from.getExternalOutputPayloadStoragePath() );
         to.setWorkflowPriority( from.getWorkflowPriority() );
+        to.setDomain( from.getDomain() );
         return to;
     }
 
@@ -1079,6 +1085,7 @@ public abstract class AbstractProtoMapper {
             to.putVariables( pair.getKey(), toProto( pair.getValue() ) );
         }
         to.setLastRetriedTime( from.getLastRetriedTime() );
+        to.addAllFailedTaskNames( from.getFailedTaskNames() );
         return to.build();
     }
 
@@ -1118,6 +1125,7 @@ public abstract class AbstractProtoMapper {
         }
         to.setVariables(variablesMap);
         to.setLastRetriedTime( from.getLastRetriedTime() );
+        to.setFailedTaskNames( from.getFailedTaskNamesList().stream().collect(Collectors.toCollection(HashSet::new)) );
         return to;
     }
 
@@ -1239,6 +1247,26 @@ public abstract class AbstractProtoMapper {
         return to;
     }
 
+    public WorkflowDefSummaryPb.WorkflowDefSummary toProto(WorkflowDefSummary from) {
+        WorkflowDefSummaryPb.WorkflowDefSummary.Builder to = WorkflowDefSummaryPb.WorkflowDefSummary.newBuilder();
+        if (from.getName() != null) {
+            to.setName( from.getName() );
+        }
+        to.setVersion( from.getVersion() );
+        if (from.getCreateTime() != null) {
+            to.setCreateTime( from.getCreateTime() );
+        }
+        return to.build();
+    }
+
+    public WorkflowDefSummary fromProto(WorkflowDefSummaryPb.WorkflowDefSummary from) {
+        WorkflowDefSummary to = new WorkflowDefSummary();
+        to.setName( from.getName() );
+        to.setVersion( from.getVersion() );
+        to.setCreateTime( from.getCreateTime() );
+        return to;
+    }
+
     public WorkflowSummaryPb.WorkflowSummary toProto(WorkflowSummary from) {
         WorkflowSummaryPb.WorkflowSummary.Builder to = WorkflowSummaryPb.WorkflowSummary.newBuilder();
         if (from.getWorkflowType() != null) {
@@ -1286,9 +1314,7 @@ public abstract class AbstractProtoMapper {
             to.setExternalOutputPayloadStoragePath( from.getExternalOutputPayloadStoragePath() );
         }
         to.setPriority( from.getPriority() );
-        if (from.getCreatedBy() != null) {
-            to.setCreatedBy( from.getCreatedBy() );
-        }
+        to.addAllFailedTaskNames( from.getFailedTaskNames() );
         return to.build();
     }
 
@@ -1311,7 +1337,7 @@ public abstract class AbstractProtoMapper {
         to.setExternalInputPayloadStoragePath( from.getExternalInputPayloadStoragePath() );
         to.setExternalOutputPayloadStoragePath( from.getExternalOutputPayloadStoragePath() );
         to.setPriority( from.getPriority() );
-        to.setCreatedBy( from.getCreatedBy() );
+        to.setFailedTaskNames( from.getFailedTaskNamesList().stream().collect(Collectors.toCollection(HashSet::new)) );
         return to;
     }
 

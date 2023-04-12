@@ -126,8 +126,6 @@ public class TaskModel {
 
     private Any outputMessage;
 
-    // id 31 is reserved
-
     private int rateLimitPerFrequency;
 
     private int rateLimitFrequencyInSeconds;
@@ -181,7 +179,15 @@ public class TaskModel {
 
     @JsonIgnore
     public Map<String, Object> getInputData() {
-        return externalInputPayloadStoragePath != null ? inputPayload : inputData;
+        if (!inputPayload.isEmpty() && !inputData.isEmpty()) {
+            inputData.putAll(inputPayload);
+            inputPayload = new HashMap<>();
+            return inputData;
+        } else if (inputPayload.isEmpty()) {
+            return inputData;
+        } else {
+            return inputPayload;
+        }
     }
 
     @JsonIgnore
@@ -391,7 +397,20 @@ public class TaskModel {
 
     @JsonIgnore
     public Map<String, Object> getOutputData() {
-        return externalOutputPayloadStoragePath != null ? outputPayload : outputData;
+        if (!outputPayload.isEmpty() && !outputData.isEmpty()) {
+            // Combine payload + data
+            // data has precedence over payload because:
+            //  with external storage enabled, payload contains the old values
+            //  while data contains the latest and if payload took precedence, it
+            //  would remove latest outputs
+            outputPayload.forEach(outputData::putIfAbsent);
+            outputPayload = new HashMap<>();
+            return outputData;
+        } else if (outputPayload.isEmpty()) {
+            return outputData;
+        } else {
+            return outputPayload;
+        }
     }
 
     @JsonIgnore
@@ -757,7 +776,8 @@ public class TaskModel {
                 && Objects.equals(getReasonForIncompletion(), taskModel.getReasonForIncompletion())
                 && Objects.equals(getWorkerId(), taskModel.getWorkerId())
                 && Objects.equals(getWaitTimeout(), taskModel.getWaitTimeout())
-                && Objects.equals(getOutputData(), taskModel.getOutputData())
+                && Objects.equals(outputData, taskModel.outputData)
+                && Objects.equals(outputPayload, taskModel.outputPayload)
                 && Objects.equals(getWorkflowTask(), taskModel.getWorkflowTask())
                 && Objects.equals(getDomain(), taskModel.getDomain())
                 && Objects.equals(getInputMessage(), taskModel.getInputMessage())
@@ -802,7 +822,8 @@ public class TaskModel {
                 getCallbackAfterSeconds(),
                 getWorkerId(),
                 getWaitTimeout(),
-                getOutputData(),
+                outputData,
+                outputPayload,
                 getWorkflowTask(),
                 getDomain(),
                 getInputMessage(),
@@ -843,7 +864,9 @@ public class TaskModel {
     }
 
     public void addInput(Map<String, Object> inputData) {
-        this.inputData.putAll(inputData);
+        if (inputData != null) {
+            this.inputData.putAll(inputData);
+        }
     }
 
     public void addOutput(String key, Object value) {
@@ -851,6 +874,14 @@ public class TaskModel {
     }
 
     public void addOutput(Map<String, Object> outputData) {
-        this.outputData.putAll(outputData);
+        if (outputData != null) {
+            this.outputData.putAll(outputData);
+        }
+    }
+
+    public void clearOutput() {
+        this.outputData.clear();
+        this.outputPayload.clear();
+        this.externalOutputPayloadStoragePath = null;
     }
 }

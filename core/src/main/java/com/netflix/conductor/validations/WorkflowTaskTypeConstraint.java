@@ -275,9 +275,11 @@ public @interface WorkflowTaskTypeConstraint {
             }
 
             try {
-                if (StringUtils.isNotBlank(duration) && !(duration.startsWith("${"))) {
+                if (StringUtils.isNotBlank(duration)
+                        && !(duration.startsWith("${") && duration.endsWith("}"))) {
                     DateTimeUtils.parseDuration(duration);
-                } else if (StringUtils.isNotBlank(until) && !(until.startsWith("${"))) {
+                } else if (StringUtils.isNotBlank(until)
+                        && !(until.startsWith("${") && until.endsWith("}"))) {
                     DateTimeUtils.parseDate(until);
                 }
             } catch (DateTimeParseException e) {

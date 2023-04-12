@@ -67,14 +67,23 @@ class WorkflowGraph extends React.Component {
 
   highlightSelectedNode = () => {
     const dagGraph = this.props.dag.graph;
-    const selectedRef = _.get(this.props.selectedTask, "ref");
-    // if ref cannot be found in this.graph, it is captured within placeholder. Look in dagGraph.
+    const taskResult = this.props.dag.resolveTaskResult(
+      this.props.selectedTask
+    );
+
+    const selectedRef =
+      taskResult &&
+      (taskResult.referenceTaskName ||
+        taskResult.workflowTask.taskReferenceName);
+
     let resolvedRef;
     if (!selectedRef) {
       resolvedRef = null;
     } else if (this.graph.hasNode(selectedRef)) {
       resolvedRef = selectedRef;
     } else if (dagGraph.hasNode(selectedRef)) {
+      // if ref cannot be found in this.graph, it may be rendered as a stacked placeholder.
+
       const parentRef = _.first(dagGraph.predecessors(selectedRef));
       const parentType = dagGraph.node(parentRef).type;
       console.assert(
@@ -330,7 +339,7 @@ class WorkflowGraph extends React.Component {
   };
 
   handleClick = (e) => {
-    const taskRef = e.path[1].id || e.path[2].id; // could be 2 layers down
+    const taskRef = e.composedPath()[1].id || e.composedPath()[2].id; // could be 2 layers down
     const node = this.graph.node(taskRef);
     if (node.type === "DF_TASK_PLACEHOLDER") {
       if (this.props.onClick) this.props.onClick({ ref: node.firstDfRef });
@@ -506,7 +515,7 @@ class WorkflowGraph extends React.Component {
         retval.shape = "stack";
         break;
       case "DF_TASK_PLACEHOLDER":
-        retval.label = `${v.tally.success} of ${v.tally.total} spawned tasks succeeded`;
+        retval.label = `${v.tally.success} of ${v.tally.total} tasks succeeded`;
         if (v.tally.inProgress) {
           retval.label += `\n${v.tally.inProgress} pending`;
         }
@@ -582,6 +591,12 @@ class WorkflowGraph extends React.Component {
       if (right > maxX) maxX = right;
       if (left < minX) minX = left;
     }
+
+    if (minX < 0) {
+      maxX = maxX - minX + BAR_MARGIN;
+      minX = -BAR_MARGIN;
+    }
+
     translateX = minX;
     barNode.elem.setAttribute(
       "transform",

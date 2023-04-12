@@ -56,7 +56,19 @@ public class NoopIndexDAO implements IndexDAO {
     }
 
     @Override
+    public SearchResult<WorkflowSummary> searchWorkflowSummary(
+            String query, String freeText, int start, int count, List<String> sort) {
+        return new SearchResult<>(0, Collections.emptyList());
+    }
+
+    @Override
     public SearchResult<String> searchTasks(
+            String query, String freeText, int start, int count, List<String> sort) {
+        return new SearchResult<>(0, Collections.emptyList());
+    }
+
+    @Override
+    public SearchResult<TaskSummary> searchTaskSummary(
             String query, String freeText, int start, int count, List<String> sort) {
         return new SearchResult<>(0, Collections.emptyList());
     }
@@ -75,6 +87,23 @@ public class NoopIndexDAO implements IndexDAO {
     @Override
     public CompletableFuture<Void> asyncUpdateWorkflow(
             String workflowInstanceId, String[] keys, Object[] values) {
+        return CompletableFuture.completedFuture(null);
+    }
+
+    @Override
+    public void removeTask(String workflowId, String taskId) {}
+
+    @Override
+    public CompletableFuture<Void> asyncRemoveTask(String workflowId, String taskId) {
+        return CompletableFuture.completedFuture(null);
+    }
+
+    @Override
+    public void updateTask(String workflowId, String taskId, String[] keys, Object[] values) {}
+
+    @Override
+    public CompletableFuture<Void> asyncUpdateTask(
+            String workflowId, String taskId, String[] keys, Object[] values) {
         return CompletableFuture.completedFuture(null);
     }
 

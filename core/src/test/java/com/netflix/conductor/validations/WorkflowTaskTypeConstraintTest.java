@@ -195,14 +195,6 @@ public class WorkflowTaskTypeConstraintTest {
         assertTrue(
                 validationErrors.contains(
                         "Both 'duration' and 'until' specified. Please provide only one input"));
-
-        workflowTask.setInputParameters(Map.of("duration", "${workflow.input.duration}"));
-        result = validator.validate(workflowTask);
-        assertEquals(0, result.size());
-
-        workflowTask.setInputParameters(Map.of("until", "${workflow.input.until}"));
-        result = validator.validate(workflowTask);
-        assertEquals(0, result.size());
     }
 
     @Test

@@ -90,6 +90,7 @@ public class DefaultEventProcessor {
         this.objectMapper = objectMapper;
         this.jsonUtils = jsonUtils;
         this.evaluators = evaluators;
+        this.retryTemplate = retryTemplate;
 
         if (properties.getEventProcessorThreadCount() <= 0) {
             throw new IllegalStateException(
@@ -105,13 +106,12 @@ public class DefaultEventProcessor {
                         properties.getEventProcessorThreadCount(), threadFactory);
 
         this.isEventMessageIndexingEnabled = properties.isEventMessageIndexingEnabled();
-        this.retryTemplate = retryTemplate;
         LOGGER.info("Event Processing is ENABLED");
     }
 
     public void handle(ObservableQueue queue, Message msg) {
         List<EventExecution> transientFailures = null;
-        Boolean executionFailed = false;
+        boolean executionFailed = false;
         try {
             if (isEventMessageIndexingEnabled) {
                 executionService.addMessage(queue.getName(), msg);
@@ -133,6 +133,9 @@ public class DefaultEventProcessor {
                 // from the queue
                 queue.publish(Collections.singletonList(msg));
                 LOGGER.debug("Message: {} published to queue: {}", msg.getId(), queue.getName());
+            } else {
+                queue.nack(Collections.singletonList(msg));
+                LOGGER.debug("Message: {} nacked on queue: {}", msg.getId(), queue.getName());
             }
             Monitors.recordEventQueueMessagesHandled(queue.getType(), queue.getName());
         }
@@ -155,7 +158,7 @@ public class DefaultEventProcessor {
             String evaluatorType = eventHandler.getEvaluatorType();
             // Set default to true so that if condition is not specified, it falls through
             // to process the event.
-            Boolean success = true;
+            boolean success = true;
             if (StringUtils.isNotEmpty(condition) && evaluators.get(evaluatorType) != null) {
                 Object result =
                         evaluators
@@ -267,6 +270,7 @@ public class DefaultEventProcessor {
                     eventExecution.getMessageId(),
                     payload);
 
+            // TODO: Switch to @Retryable annotation on SimpleActionProcessor.execute()
             Map<String, Object> output =
                     retryTemplate.execute(
                             context ->

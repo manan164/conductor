@@ -63,12 +63,13 @@ import com.netflix.conductor.common.run.SearchResult;
 import com.netflix.conductor.common.run.TaskSummary;
 import com.netflix.conductor.common.run.WorkflowSummary;
 import com.netflix.conductor.core.events.queue.Message;
-import com.netflix.conductor.core.exception.ApplicationException;
+import com.netflix.conductor.core.exception.TransientException;
 import com.netflix.conductor.dao.IndexDAO;
 import com.netflix.conductor.es6.config.ElasticSearchProperties;
 import com.netflix.conductor.es6.dao.query.parser.internal.ParserException;
 import com.netflix.conductor.metrics.Monitors;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -657,7 +658,21 @@ public class ElasticSearchDAOV6 extends ElasticSearchBaseDAO implements IndexDAO
     @Override
     public SearchResult<String> searchWorkflows(
             String query, String freeText, int start, int count, List<String> sort) {
-        return search(query, start, count, sort, freeText, WORKFLOW_DOC_TYPE);
+        return search(query, start, count, sort, freeText, WORKFLOW_DOC_TYPE, true, String.class);
+    }
+
+    @Override
+    public SearchResult<WorkflowSummary> searchWorkflowSummary(
+            String query, String freeText, int start, int count, List<String> sort) {
+        return search(
+                query,
+                start,
+                count,
+                sort,
+                freeText,
+                WORKFLOW_DOC_TYPE,
+                false,
+                WorkflowSummary.class);
     }
 
     @Override
@@ -668,7 +683,13 @@ public class ElasticSearchDAOV6 extends ElasticSearchBaseDAO implements IndexDAO
     @Override
     public SearchResult<String> searchTasks(
             String query, String freeText, int start, int count, List<String> sort) {
-        return search(query, start, count, sort, freeText, TASK_DOC_TYPE);
+        return search(query, start, count, sort, freeText, TASK_DOC_TYPE, true, String.class);
+    }
+
+    @Override
+    public SearchResult<TaskSummary> searchTaskSummary(
+            String query, String freeText, int start, int count, List<String> sort) {
+        return search(query, start, count, sort, freeText, TASK_DOC_TYPE, false, TaskSummary.class);
     }
 
     @Override
@@ -701,9 +722,7 @@ public class ElasticSearchDAOV6 extends ElasticSearchBaseDAO implements IndexDAO
     @Override
     public void updateWorkflow(String workflowInstanceId, String[] keys, Object[] values) {
         if (keys.length != values.length) {
-            throw new ApplicationException(
-                    ApplicationException.Code.INVALID_INPUT,
-                    "Number of keys and values do not match");
+            throw new IllegalArgumentException("Number of keys and values do not match");
         }
 
         long startTime = Instant.now().toEpochMilli();
@@ -732,6 +751,98 @@ public class ElasticSearchDAOV6 extends ElasticSearchBaseDAO implements IndexDAO
             String workflowInstanceId, String[] keys, Object[] values) {
         return CompletableFuture.runAsync(
                 () -> updateWorkflow(workflowInstanceId, keys, values), executorService);
+    }
+
+    @Override
+    public void removeTask(String workflowId, String taskId) {
+        try {
+            long startTime = Instant.now().toEpochMilli();
+            String docType = StringUtils.isBlank(docTypeOverride) ? TASK_DOC_TYPE : docTypeOverride;
+
+            SearchResult<String> taskSearchResult =
+                    searchTasks(
+                            String.format(
+                                    "(taskId='%s') AND (workflowId='%s')", taskId, workflowId),
+                            "*",
+                            0,
+                            1,
+                            null);
+
+            if (taskSearchResult.getTotalHits() == 0) {
+                LOGGER.error("Task: {} does not belong to workflow: {}", taskId, workflowId);
+                Monitors.error(CLASS_NAME, "removeTask");
+                return;
+            }
+
+            DeleteRequest request = new DeleteRequest(taskIndexName, docType, taskId);
+            DeleteResponse response = elasticSearchClient.delete(request).actionGet();
+            long endTime = Instant.now().toEpochMilli();
+
+            if (response.getResult() != DocWriteResponse.Result.DELETED) {
+                LOGGER.error(
+                        "Index removal failed - task not found by id: {} of workflow: {}",
+                        taskId,
+                        workflowId);
+                Monitors.error(CLASS_NAME, "removeTask");
+                return;
+            }
+            LOGGER.debug(
+                    "Time taken {} for removing task:{} of workflow: {}",
+                    endTime - startTime,
+                    taskId,
+                    workflowId);
+            Monitors.recordESIndexTime("remove_task", docType, endTime - startTime);
+            Monitors.recordWorkerQueueSize(
+                    "indexQueue", ((ThreadPoolExecutor) executorService).getQueue().size());
+        } catch (Exception e) {
+            LOGGER.error(
+                    "Failed to remove task: {} of workflow: {} from index", taskId, workflowId, e);
+            Monitors.error(CLASS_NAME, "removeTask");
+        }
+    }
+
+    @Override
+    public CompletableFuture<Void> asyncRemoveTask(String workflowId, String taskId) {
+        return CompletableFuture.runAsync(() -> removeTask(workflowId, taskId), executorService);
+    }
+
+    @Override
+    public void updateTask(String workflowId, String taskId, String[] keys, Object[] values) {
+        if (keys.length != values.length) {
+            throw new IllegalArgumentException("Number of keys and values do not match");
+        }
+
+        long startTime = Instant.now().toEpochMilli();
+        String docType = StringUtils.isBlank(docTypeOverride) ? TASK_DOC_TYPE : docTypeOverride;
+
+        UpdateRequest request = new UpdateRequest(taskIndexName, docType, taskId);
+        Map<String, Object> source =
+                IntStream.range(0, keys.length)
+                        .boxed()
+                        .collect(Collectors.toMap(i -> keys[i], i -> values[i]));
+        request.doc(source);
+        LOGGER.debug(
+                "Updating task: {} of workflow: {} in elasticsearch index: {}",
+                taskId,
+                workflowId,
+                taskIndexName);
+        elasticSearchClient.update(request).actionGet();
+        long endTime = Instant.now().toEpochMilli();
+        LOGGER.debug(
+                "Time taken {} for updating task: {} of workflow: {}",
+                endTime - startTime,
+                taskId,
+                workflowId);
+        Monitors.recordESIndexTime("update_task", docType, endTime - startTime);
+        Monitors.recordWorkerQueueSize(
+                "indexQueue", ((ThreadPoolExecutor) executorService).getQueue().size());
+    }
+
+    @Override
+    public CompletableFuture<Void> asyncUpdateTask(
+            String workflowId, String taskId, String[] keys, Object[] values) {
+        return CompletableFuture.runAsync(
+                () -> updateTask(workflowId, taskId, keys, values), executorService);
     }
 
     @Override
@@ -774,18 +885,19 @@ public class ElasticSearchDAOV6 extends ElasticSearchBaseDAO implements IndexDAO
             SearchResponse response = srb.get();
             return response.getHits().getTotalHits();
         } catch (ParserException e) {
-            throw new ApplicationException(
-                    ApplicationException.Code.BACKEND_ERROR, e.getMessage(), e);
+            throw new TransientException(e.getMessage(), e);
         }
     }
 
-    private SearchResult<String> search(
+    private <T> SearchResult<T> search(
             String structuredQuery,
             int start,
             int size,
             List<String> sortOptions,
             String freeTextQuery,
-            String docType) {
+            String docType,
+            boolean idOnly,
+            Class<T> clazz) {
         try {
             docType = StringUtils.isBlank(docTypeOverride) ? docType : docTypeOverride;
             BoolQueryBuilder fq = boolQueryBuilder(structuredQuery, freeTextQuery);
@@ -794,16 +906,15 @@ public class ElasticSearchDAOV6 extends ElasticSearchBaseDAO implements IndexDAO
                             .prepareSearch(getIndexName(docType))
                             .setQuery(fq)
                             .setTypes(docType)
-                            .storedFields("_id")
                             .setFrom(start)
                             .setSize(size);
-
+            if (idOnly) {
+                srb.storedFields("_id");
+            }
             addSortOptions(srb, sortOptions);
-
-            return mapSearchResult(srb.get());
+            return mapSearchResult(srb.get(), idOnly, clazz);
         } catch (ParserException e) {
-            throw new ApplicationException(
-                    ApplicationException.Code.BACKEND_ERROR, e.getMessage(), e);
+            throw new TransientException(e.getMessage(), e);
         }
     }
 
@@ -824,10 +935,34 @@ public class ElasticSearchDAOV6 extends ElasticSearchBaseDAO implements IndexDAO
         }
     }
 
-    private SearchResult<String> mapSearchResult(SearchResponse response) {
-        List<String> result = new LinkedList<>();
-        response.getHits().forEach(hit -> result.add(hit.getId()));
-        long count = response.getHits().getTotalHits();
+    private <T> SearchResult<T> mapSearchResult(
+            SearchResponse response, boolean idOnly, Class<T> clazz) {
+        SearchHits searchHits = response.getHits();
+        long count = searchHits.getTotalHits();
+        List<T> result;
+        if (idOnly) {
+            result =
+                    Arrays.stream(searchHits.getHits())
+                            .map(hit -> clazz.cast(hit.getId()))
+                            .collect(Collectors.toList());
+        } else {
+            result =
+                    Arrays.stream(searchHits.getHits())
+                            .map(
+                                    hit -> {
+                                        try {
+                                            return objectMapper.readValue(
+                                                    hit.getSourceAsString(), clazz);
+                                        } catch (JsonProcessingException e) {
+                                            LOGGER.error(
+                                                    "Failed to de-serialize elasticsearch from source: {}",
+                                                    hit.getSourceAsString(),
+                                                    e);
+                                        }
+                                        return null;
+                                    })
+                            .collect(Collectors.toList());
+        }
         return new SearchResult<>(count, result);
     }
 

@@ -2110,6 +2110,9 @@ public class TestWorkflowExecutor {
         assertEquals(
                 failedTask.getTaskId(),
                 argumentCaptor.getAllValues().get(0).getInput().get("failureTaskId"));
+        assertNotNull(
+                failedTask.getTaskId(),
+                argumentCaptor.getAllValues().get(0).getInput().get("failedWorkflow"));
     }
 
     @Test

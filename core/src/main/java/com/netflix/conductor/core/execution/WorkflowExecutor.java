@@ -1134,6 +1134,7 @@ public class WorkflowExecutor {
                 if (workflow.getFailedTaskId() != null) {
                     input.put("failureTaskId", workflow.getFailedTaskId());
                 }
+                input.put("failedWorkflow", workflow);
 
                 try {
                     WorkflowDef latestFailureWorkflow =

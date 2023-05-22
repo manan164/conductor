@@ -1047,7 +1047,7 @@ public class WorkflowExecutor {
             return workflow;
 
         } catch (TerminateWorkflowException twe) {
-            LOGGER.info("Execution terminated of workflow: {}", workflow, twe);
+            LOGGER.debug("Execution terminated of workflow: {}", workflow.getWorkflowId(), twe);
             terminate(workflow, twe);
             return workflow;
         } catch (RuntimeException e) {

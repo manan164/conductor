@@ -111,16 +111,17 @@ public class RedisRateLimitingDAO extends BaseDynoDAO implements RateLimitingDAO
             String key = nsKey(TASK_RATE_LIMIT_BUCKET, task.getTaskDefName());
             jedisProxy.zremrangeByScore(
                     key, "-inf", String.valueOf(currentTimeEpochMinusRateLimitBucket));
-            int currentBucketCount =
-                    Math.toIntExact(
-                            jedisProxy.zcount(
-                                    key,
-                                    currentTimeEpochMinusRateLimitBucket,
-                                    currentTimeEpochMillis));
+            int currentBucketCount = Math.toIntExact(jedisProxy.zcard(key));
+
             if (currentBucketCount < rateLimitPerFrequency) {
-                jedisProxy.zadd(
-                        key, currentTimeEpochMillis, String.valueOf(currentTimeEpochMillis));
-                jedisProxy.expire(key, rateLimitFrequencyInSeconds);
+                if (jedisProxy.exists(key)) {
+                    // Do not extend the expiry for existing set.
+                    jedisProxy.zadd(key, currentTimeEpochMillis, task.getTaskId());
+                } else {
+                    // New set so set the expiry
+                    jedisProxy.zadd(key, currentTimeEpochMillis, task.getTaskId());
+                    jedisProxy.expire(key, rateLimitFrequencyInSeconds);
+                }
                 LOGGER.info(
                         "TaskId: {} with TaskDefinition of: {} has rateLimitPerFrequency: {} and rateLimitFrequencyInSeconds: {} within the rate limit with current count {}",
                         task.getTaskId(),

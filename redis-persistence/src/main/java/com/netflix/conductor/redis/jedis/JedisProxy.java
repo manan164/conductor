@@ -228,4 +228,8 @@ public class JedisProxy {
     public Long scard(String key) {
         return jedisCommands.scard(key);
     }
+
+    public boolean exists(String key) {
+        return jedisCommands.exists(key);
+    }
 }

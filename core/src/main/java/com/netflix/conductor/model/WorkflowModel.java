@@ -15,7 +15,6 @@ package com.netflix.conductor.model;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.netflix.conductor.common.metadata.workflow.IdempotencyStrategy;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 
@@ -104,8 +103,6 @@ public class WorkflowModel {
 
     private Status previousStatus;
     private String idempotencyKey;
-
-    private String idempotencyStrategy;
 
     private List<WorkflowModel> history = new LinkedList<>();
 
@@ -459,15 +456,6 @@ public class WorkflowModel {
 
     public void setIdempotencyKey(String idempotencyKey) {
         this.idempotencyKey = idempotencyKey;
-    }
-
-
-    public String getIdempotencyStrategy() {
-        return idempotencyStrategy;
-    }
-
-    public void setIdempotencyStrategy(String idempotencyStrategy) {
-        this.idempotencyStrategy = idempotencyStrategy;
     }
 
     public void externalizeInput(String path) {

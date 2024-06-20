@@ -106,6 +106,16 @@ public class WorkflowDef extends Auditable {
 
     private Schema outputSchema;
 
+    private boolean enforceSchema = true;
+
+    public boolean isEnforceSchema() {
+        return enforceSchema;
+    }
+
+    public void setEnforceSchema(boolean enforceSchema) {
+        this.enforceSchema = enforceSchema;
+    }
+
     /**
      * @return the name
      */

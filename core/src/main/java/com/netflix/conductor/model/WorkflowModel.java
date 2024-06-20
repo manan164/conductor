@@ -109,6 +109,26 @@ public class WorkflowModel {
     private Map<String, Object> systemMetadata = new HashMap<>();
     private Schema outputSchema;
 
+    public Schema getInputSchema() {
+        return inputSchema;
+    }
+
+    public void setInputSchema(Schema inputSchema) {
+        this.inputSchema = inputSchema;
+    }
+
+    public boolean isEnforceSchema() {
+        return enforceSchema;
+    }
+
+    public void setEnforceSchema(boolean enforceSchema) {
+        this.enforceSchema = enforceSchema;
+    }
+
+    private Schema inputSchema;
+
+    private boolean enforceSchema;
+
     private List<WorkflowModel> history = new LinkedList<>();
 
     public List<WorkflowModel> getHistory() {

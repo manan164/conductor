@@ -160,6 +160,10 @@ public class TaskModel {
     private String parentTaskId;
 
     private Schema outputSchema;
+
+    private Schema inputSchema;
+
+    private boolean enforceSchema;
     private @Valid Map<String, List<StateChangeEvent>> onStateChange;
 
     @JsonIgnore private Map<String, Object> inputPayload = new HashMap<>();
@@ -169,6 +173,22 @@ public class TaskModel {
     @JsonIgnore private Map<String, Object> inputData = new HashMap<>();
 
     @JsonIgnore private Map<String, Object> outputData = new HashMap<>();
+
+    public Schema getInputSchema() {
+        return inputSchema;
+    }
+
+    public void setInputSchema(Schema inputSchema) {
+        this.inputSchema = inputSchema;
+    }
+
+    public boolean isEnforceSchema() {
+        return enforceSchema;
+    }
+
+    public void setEnforceSchema(boolean enforceSchema) {
+        this.enforceSchema = enforceSchema;
+    }
 
     public String getTaskType() {
         return taskType;
